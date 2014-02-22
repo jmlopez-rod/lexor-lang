@@ -6,38 +6,11 @@
 <body>
 <h1>Lexor Languages</h1>
 <?python
-import operator
-import lexor.core.elements as core
-
-lang = dict()
-for line in open('lexor-lang.url').readlines():
-    name, url = line.strip().split(':', 1)
-    name = name.split('-')
-    if name[1] == 'converter':
-        key = '%s.%s.%s' % (name[0], name[1], name[2])
-        style = name[3]
-    else:
-        key = '%s.%s' % (name[0], name[1])
-        style = name[2]
-    if key not in lang:
-        lang[key] = list()
-    lang[key].append((style, url.strip()))
-
-lang_node = core.Element('ul', {'id': 'lexor_lang'})
-keys = lang.keys()
-keys.sort()
-for key in keys:
-    lang[key].sort(key=operator.itemgetter(0))
-    processor = core.Element('li', {'id': key})
-    processor.append_child(core.Text(key))
-    processor.append_child(core.Element('ul'))
-    for style, url in lang[key]:
-        processor[-1].append_child(core.Element('li'))
-        link = core.Element('a', {'href': url})
-        link.append_child(style)
-        processor[-1][-1].append_child(link)
-    lang_node.append_child(processor)
-echo(lang_node)
+import os
+mod = import_module('web_module')
+lang = mod.read_style_urls('%s/lexor-lang.url' % __DIR__)
+node = mod.make_lang_node(lang)
+echo(node)
 ?>
 </body>
 </html>
