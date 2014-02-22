@@ -21,7 +21,7 @@ for line in open('lexor-lang.url').readlines():
         style = name[2]
     if key not in lang:
         lang[key] = list()
-    lang[key].append((style, url))
+    lang[key].append((style, url.strip()))
 
 lang_node = core.Element('ul', {'id': 'lexor_lang'})
 keys = lang.keys()
