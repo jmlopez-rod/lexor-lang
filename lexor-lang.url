@@ -1,6 +1,7 @@
 html-converter-html-default: https://github.com/jmlopez-rod/html-converter-html-default/releases
 html-parser-default: https://github.com/jmlopez-rod/html-parser-default/releases
 html-writer-default: https://github.com/jmlopez-rod/html-writer-default/releases
+html-writer-min: https://github.com/jmlopez-rod/html-writer-min/releases
 html-writer-plain: https://github.com/jmlopez-rod/html-writer-plain/releases
 lexor-writer-log: https://github.com/jmlopez-rod/lexor-writer-log/releases
 lexor-writer-repr: https://github.com/jmlopez-rod/lexor-writer-repr/releases
