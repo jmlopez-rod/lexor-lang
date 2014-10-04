@@ -4531,9 +4531,6 @@ nav.stickynav {
   margin: auto;
   display: block;
 }
-.rst-content h1, .rst-content h2, .rst-content h3, .rst-content h4, .rst-content h5, .rst-content h6, .rst-content dl dt {
-  color: #00ff00;
-}
 .rst-content h1 .headerlink, .rst-content h2 .headerlink, .rst-content h3 .headerlink, .rst-content h4 .headerlink, .rst-content h5 .headerlink, .rst-content h6 .headerlink, .rst-content dl dt .headerlink {
   display: none;
   visibility: hidden;
@@ -4647,6 +4644,7 @@ nav.stickynav {
   margin-bottom: 24px;
 }
 .rst-content dl:not(.docutils) dt {
+  width: 100%;
   display: inline-block;
   margin: 6px 0;
   font-size: 90%;
@@ -4665,6 +4663,7 @@ nav.stickynav {
   font-size: 100% !important;
 }
 .rst-content dl:not(.docutils) dl dt {
+  width: auto;
   margin-bottom: 6px;
   border: none;
   border-left: solid 3px #cccccc;

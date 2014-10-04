@@ -100,7 +100,6 @@
 
   // This is the #href that shows up on hover. Sphinx's is terrible so I hack it away.
   h1, h2, h3, h4, h5, h6, dl dt
-    color: #00ff00
     .headerlink
       display: none
       visibility: hidden
@@ -218,6 +217,7 @@
     margin-bottom: $base-line-height
     // This would be the equivilant of a .. class::
     dt
+      width: 100%
       display: inline-block
       margin: $base-line-height / 4 0
       font-size: 90%
@@ -234,6 +234,7 @@
         font-size: 100% !important
     // And this would be the .. method::
     dl dt
+      width: auto
       margin-bottom: $base-line-height / 4
       border: none
       border-left: solid 3px hsl(0,0%,80%)
