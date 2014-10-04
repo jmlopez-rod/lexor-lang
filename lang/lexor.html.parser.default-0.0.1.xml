@@ -1,0 +1,1080 @@
+<module name="main">
+    <doc>
+        <![CDATA[HTML: DEFAULT Parsing Style
+
+This style attempts to follow all the HTML rules. It captures all the
+information in the file. This includes all the extra spaces, new
+lines and tab characters the file might contain.
+
+]]>
+    </doc>
+    <info>
+        <entry key="lang">html</entry>
+        <entry key="style">default</entry>
+        <entry key="ver">0.0.1</entry>
+        <entry key="description">
+            <![CDATA[Parse HTML files using all the valid rules.]]>
+        </entry>
+        <entry key="license">BSD License</entry>
+        <entry key="author">Manuel Lopez</entry>
+        <entry key="author_email">jmlopez.rod@gmail.com</entry>
+        <entry key="url">http://jmlopez-rod.github.io/lexor-lang/html-parser-default</entry>
+        <entry key="version">(0, 0, 1, 'final', 0)</entry>
+        <entry key="type">parser</entry>
+    </info>
+    <mapping>
+        <entry key="__default__">
+            <checker>
+                <![CDATA[<&]]>
+            </checker>
+            <processor module="lexor-lang_html_parser_default_element" name="ElementNP"/>
+            <processor module="lexor-lang_html_parser_default_cdata" name="CDataNP"/>
+            <processor module="lexor-lang_html_parser_default_doctype" name="DocumentTypeNP"/>
+            <processor module="lexor-lang_html_parser_default_comment" name="CommentNP"/>
+            <processor module="lexor-lang_html_parser_default_pi" name="ProcessingInstructionNP"/>
+            <processor module="lexor-lang_html_parser_default_entity" name="EntityNP"/>
+        </entry>
+    </mapping>
+    <classes/>
+    <functions/>
+    <data>
+        <data name="MOD">
+            <![CDATA[{'comment': <module 'lexor-lang_html_parser_default_comment' from '/Users/jmlopez/github/lexor-lang-repos/html-parser-default/default/comment.pyc'>, 'doctype': <module 'lexor-lang_html_parser_default_doctype' from '/Users/jmlopez/github/lexor-lang-repos/html-parser-default/default/doctype.pyc'>, 'entity': <module 'lexor-lang_html_parser_default_entity' from '/Users/jmlopez/github/lexor-lang-repos/html-parser-default/default/entity.pyc'>, 'cdata': <module 'lexor-lang_html_parser_default_cdata' from '/Users/jmlopez/github/lexor-lang-repos/html-parser-default/default/cdata.pyc'>, 'element': <module 'lexor-lang_html_parser_default_element' from '/Users/jmlopez/github/lexor-lang-repos/html-parser-default/default/element.pyc'>, 'pi': <module 'lexor-lang_html_parser_default_pi' from '/Users/jmlopez/github/lexor-lang-repos/html-parser-default/default/pi.pyc'>}]]>
+        </data>
+    </data>
+    <imports>
+        <other fullname="lexor.command.lang.load_aux" type="function" name="load_aux"/>
+        <other fullname="lexor.init" type="function" name="init"/>
+    </imports>
+</module>
+<module name="lexor-lang_html_parser_default_cdata">
+    <doc>
+        <![CDATA[HTML: CDATA NodeParser
+
+`CData` nodes are enclosed within `<![CDATA[` and `]]]]><![CDATA[>`. These type
+of nodes are useful because no parsing takes place inside the
+content. The only restriction involved with these nodes is that the
+character sequence `]]]]><![CDATA[>` must not appear in the content.
+
+In case there is a need to write `]]]]><![CDATA[>` inside the character data then
+you have to split the content into two `CData` nodes:
+
+The correct way to write the following
+
+    <![CDATA[Cannot have `]]]]><![CDATA[>` inside.]]]]><![CDATA[>
+
+is
+
+    <![CDATA[Cannot have `]]]]]]><![CDATA[><![CDATA[>` inside.]]]]><![CDATA[>
+
+]]>
+    </doc>
+    <classes>
+        <class name="CDataNP">
+            <bases>
+                <base name="lexor.core.parser.NodeParser"/>
+            </bases>
+            <mro>
+                <class name="lexor-lang_html_parser_default_cdata.CDataNP"/>
+                <class name="lexor.core.parser.NodeParser"/>
+                <class name="__builtin__.object"/>
+            </mro>
+            <doc>
+                <![CDATA[Retrives the data enclosed within `<![CDATA[` and `]]]]><![CDATA[>` and
+returns a `CData` node. ]]>
+            </doc>
+            <method_block from="lexor-lang_html_parser_default_cdata.CDataNP">
+                <function name="make_node">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                        </args>
+                    </argspec>
+                </function>
+            </method_block>
+            <method_block from="lexor.core.parser.NodeParser">
+                <function name="__init__">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="parser"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[A |NodeParser| needs to be initialized with a |Parser|
+object. If this method is to be overloaded then make sure
+that it only accepts one parameter: ``parser``. This method
+is used by |Parser| and it calls it with itself as the
+parameter.]]>
+                    </doc>
+                </function>
+                <function name="close">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="_"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[This method needs to be overloaded if the node parser
+returns a |Node| with the :meth:`make_node` method.
+
+This method will not get called if :meth:`make_node` returned
+a |Node| inside a ``list``. The close function takes as input
+the node object that :meth:`make_node` returned and it should
+decide if the node can be closed or not. If it is indeed time
+to close the node then return a ``list`` with the position
+where the node is being closed, otherwise return ``None``.
+
+If this method is not overloaded then a
+``NotImplementedError`` exception will be raised.]]>
+                    </doc>
+                </function>
+                <function name="make_node">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                        </args>
+                    </argspec>
+                </function>
+                <function name="msg">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="code"/>
+                            <arg name="pos"/>
+                            <arg name="arg" default="None"/>
+                            <arg name="uri" default="None"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[Send a message to the parser by providing one of the error
+codes defined in the style as well as the position where the
+error took place. The position has the form of a list
+containing the line and column number. Some error codes may
+provide arguments, this can be passed to `arg`. In case the
+error occurred somewhere not in the current document, perhaps
+in a string, then you may provide a new `uri` to denote the
+location.
+
+.. todo:: Provide link to parse style creation.
+
+See :ref:`` for more information on how to properly use this
+method. ]]>
+                    </doc>
+                </function>
+            </method_block>
+            <member_block from="lexor.core.parser.NodeParser">
+                <member name="__weakref__"/>
+            </member_block>
+            <method_block from="__builtin__.object">
+                <function name="__init__">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="parser"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[A |NodeParser| needs to be initialized with a |Parser|
+object. If this method is to be overloaded then make sure
+that it only accepts one parameter: ``parser``. This method
+is used by |Parser| and it calls it with itself as the
+parameter.]]>
+                    </doc>
+                </function>
+            </method_block>
+        </class>
+    </classes>
+    <functions/>
+    <data>
+        <data name="MSG">
+            <![CDATA[{'E100': '`]]]]><![CDATA[>` not found'}]]>
+        </data>
+        <data name="MSG_EXPLANATION">
+            <![CDATA[['\n    - The terminating character sequence for the `CData` node was not\n      found.\n\n    Okay: <![CDATA[We can write a < b and M&Ms.]]]]><![CDATA[>\n\n    E100: <![CDATA[We can write a < b and M&Ms.\n']]]>
+        </data>
+    </data>
+    <imports>
+        <other fullname="lexor.core.parser.NodeParser" type="type" name="NodeParser"/>
+        <other fullname="lexor.core.elements.CData" type="type" name="CData"/>
+    </imports>
+</module>
+<module name="lexor-lang_html_parser_default_pi">
+    <doc>
+        <![CDATA[HTML: PI NodeParser
+
+An HTML processing instruction is enclosed within `<?` and `?>`. It
+contains a target and optionally some content. The content is the
+node data and it cannot contain the sequence `?>`. A valid processing
+instruction is of the form
+
+    <?PITarget*PIContent?>
+
+where `*` is a space character (this includes tabs and new lines).
+
+]]>
+    </doc>
+    <classes>
+        <class name="ProcessingInstructionNP">
+            <bases>
+                <base name="lexor.core.parser.NodeParser"/>
+            </bases>
+            <mro>
+                <class name="lexor-lang_html_parser_default_pi.ProcessingInstructionNP"/>
+                <class name="lexor.core.parser.NodeParser"/>
+                <class name="__builtin__.object"/>
+            </mro>
+            <doc>
+                <![CDATA[Parses content enclosed within `<?PITarget` and `?>`. Note
+that the target of the `ProcessingInstruction` object that it
+returns has `?` preappended to it. ]]>
+            </doc>
+            <method_block from="lexor-lang_html_parser_default_pi.ProcessingInstructionNP">
+                <function name="make_node">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                        </args>
+                    </argspec>
+                </function>
+            </method_block>
+            <method_block from="lexor.core.parser.NodeParser">
+                <function name="__init__">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="parser"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[A |NodeParser| needs to be initialized with a |Parser|
+object. If this method is to be overloaded then make sure
+that it only accepts one parameter: ``parser``. This method
+is used by |Parser| and it calls it with itself as the
+parameter.]]>
+                    </doc>
+                </function>
+                <function name="close">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="_"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[This method needs to be overloaded if the node parser
+returns a |Node| with the :meth:`make_node` method.
+
+This method will not get called if :meth:`make_node` returned
+a |Node| inside a ``list``. The close function takes as input
+the node object that :meth:`make_node` returned and it should
+decide if the node can be closed or not. If it is indeed time
+to close the node then return a ``list`` with the position
+where the node is being closed, otherwise return ``None``.
+
+If this method is not overloaded then a
+``NotImplementedError`` exception will be raised.]]>
+                    </doc>
+                </function>
+                <function name="make_node">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                        </args>
+                    </argspec>
+                </function>
+                <function name="msg">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="code"/>
+                            <arg name="pos"/>
+                            <arg name="arg" default="None"/>
+                            <arg name="uri" default="None"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[Send a message to the parser by providing one of the error
+codes defined in the style as well as the position where the
+error took place. The position has the form of a list
+containing the line and column number. Some error codes may
+provide arguments, this can be passed to `arg`. In case the
+error occurred somewhere not in the current document, perhaps
+in a string, then you may provide a new `uri` to denote the
+location.
+
+.. todo:: Provide link to parse style creation.
+
+See :ref:`` for more information on how to properly use this
+method. ]]>
+                    </doc>
+                </function>
+            </method_block>
+            <member_block from="lexor.core.parser.NodeParser">
+                <member name="__weakref__"/>
+            </member_block>
+            <method_block from="__builtin__.object">
+                <function name="__init__">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="parser"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[A |NodeParser| needs to be initialized with a |Parser|
+object. If this method is to be overloaded then make sure
+that it only accepts one parameter: ``parser``. This method
+is used by |Parser| and it calls it with itself as the
+parameter.]]>
+                    </doc>
+                </function>
+            </method_block>
+        </class>
+    </classes>
+    <functions/>
+    <data>
+        <data name="RE">
+            <![CDATA[<_sre.SRE_Pattern object at 0x10a7dbf48>]]>
+        </data>
+        <data name="MSG">
+            <![CDATA[{'E100': 'ignoring processing instruction', 'E101': '`<{0}` was started but `?>` was not found'}]]>
+        </data>
+        <data name="MSG_EXPLANATION">
+            <![CDATA[["\n    - A processing instruction must have a target and must be\n      enclosed within `<?` and `?>`.\n\n    - If there is no space following the target of the processing\n      instruction, that is, if the file ends abrutly, then the\n      processing instruction will be ignored.\n\n    Okay: <?php echo '<p>Hello World</p>'; ?>\n\n    E100: <?php\n    E101: <?php echo '<p>Hello World</p>';\n"]]]>
+        </data>
+    </data>
+    <imports>
+        <module fullname="re" name="re"/>
+        <other fullname="lexor.core.elements.ProcessingInstruction" type="type" name="ProcessingInstruction"/>
+        <other fullname="lexor.core.elements.Text" type="type" name="Text"/>
+        <other fullname="lexor.core.parser.NodeParser" type="type" name="NodeParser"/>
+    </imports>
+</module>
+<module name="lexor-lang_html_parser_default_doctype">
+    <doc>
+        <![CDATA[HTML: DOCTYPE NodeParser
+
+DOCTYPE is case insensitive in HTML. The following forms are valid:
+
+    <!doctype html>
+    <!DOCTYPE html>
+    <!DOCTYPE HTML>
+    <!DoCtYpE hTmL>
+
+See: <http://stackoverflow.com/a/9109157/788553>
+
+]]>
+    </doc>
+    <classes>
+        <class name="DocumentTypeNP">
+            <bases>
+                <base name="lexor.core.parser.NodeParser"/>
+            </bases>
+            <mro>
+                <class name="lexor-lang_html_parser_default_doctype.DocumentTypeNP"/>
+                <class name="lexor.core.parser.NodeParser"/>
+                <class name="__builtin__.object"/>
+            </mro>
+            <doc>
+                <![CDATA[Obtains the content enclosed within `<!doctype` and `>`. ]]>
+            </doc>
+            <method_block from="lexor-lang_html_parser_default_doctype.DocumentTypeNP">
+                <function name="make_node">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                        </args>
+                    </argspec>
+                </function>
+            </method_block>
+            <method_block from="lexor.core.parser.NodeParser">
+                <function name="__init__">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="parser"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[A |NodeParser| needs to be initialized with a |Parser|
+object. If this method is to be overloaded then make sure
+that it only accepts one parameter: ``parser``. This method
+is used by |Parser| and it calls it with itself as the
+parameter.]]>
+                    </doc>
+                </function>
+                <function name="close">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="_"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[This method needs to be overloaded if the node parser
+returns a |Node| with the :meth:`make_node` method.
+
+This method will not get called if :meth:`make_node` returned
+a |Node| inside a ``list``. The close function takes as input
+the node object that :meth:`make_node` returned and it should
+decide if the node can be closed or not. If it is indeed time
+to close the node then return a ``list`` with the position
+where the node is being closed, otherwise return ``None``.
+
+If this method is not overloaded then a
+``NotImplementedError`` exception will be raised.]]>
+                    </doc>
+                </function>
+                <function name="make_node">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                        </args>
+                    </argspec>
+                </function>
+                <function name="msg">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="code"/>
+                            <arg name="pos"/>
+                            <arg name="arg" default="None"/>
+                            <arg name="uri" default="None"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[Send a message to the parser by providing one of the error
+codes defined in the style as well as the position where the
+error took place. The position has the form of a list
+containing the line and column number. Some error codes may
+provide arguments, this can be passed to `arg`. In case the
+error occurred somewhere not in the current document, perhaps
+in a string, then you may provide a new `uri` to denote the
+location.
+
+.. todo:: Provide link to parse style creation.
+
+See :ref:`` for more information on how to properly use this
+method. ]]>
+                    </doc>
+                </function>
+            </method_block>
+            <member_block from="lexor.core.parser.NodeParser">
+                <member name="__weakref__"/>
+            </member_block>
+            <method_block from="__builtin__.object">
+                <function name="__init__">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="parser"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[A |NodeParser| needs to be initialized with a |Parser|
+object. If this method is to be overloaded then make sure
+that it only accepts one parameter: ``parser``. This method
+is used by |Parser| and it calls it with itself as the
+parameter.]]>
+                    </doc>
+                </function>
+            </method_block>
+        </class>
+    </classes>
+    <functions/>
+    <data>
+        <data name="MSG">
+            <![CDATA[{'E100': '`>` not found'}]]>
+        </data>
+        <data name="MSG_EXPLANATION">
+            <![CDATA[['\n    - A `doctype` element starts with `<!doctype` and it is\n      terminated by `>`.\n\n    Okay: <!doctype html>\n    Okay: <!DOCTYPE html>\n\n    E100: <!doctype html\n']]]>
+        </data>
+    </data>
+    <imports>
+        <other fullname="lexor.core.parser.NodeParser" type="type" name="NodeParser"/>
+        <other fullname="lexor.core.elements.DocumentType" type="type" name="DocumentType"/>
+    </imports>
+</module>
+<module name="lexor-lang_html_parser_default_comment">
+    <doc>
+        <![CDATA[HTML: COMMENT NodeParser
+
+An HTML comment is enclosed within `<!--` and `-->`. The string `--`
+(double-hyphen) MUST NOT occur within comments. If the string starts
+with `<!` then it is still a comment but a warning will be issued.
+
+See: <http://www.w3.org/TR/REC-xml/#sec-comments>
+
+]]>
+    </doc>
+    <classes>
+        <class name="CommentNP">
+            <bases>
+                <base name="lexor.core.parser.NodeParser"/>
+            </bases>
+            <mro>
+                <class name="lexor-lang_html_parser_default_comment.CommentNP"/>
+                <class name="lexor.core.parser.NodeParser"/>
+                <class name="__builtin__.object"/>
+            </mro>
+            <doc>
+                <![CDATA[Creates `Comment` nodes from comments written in HTML. ]]>
+            </doc>
+            <method_block from="lexor-lang_html_parser_default_comment.CommentNP">
+                <function name="_handle_bogus">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="parser"/>
+                            <arg name="caret"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[Helper method for make_node. ]]>
+                    </doc>
+                </function>
+                <function name="make_node">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                        </args>
+                    </argspec>
+                </function>
+            </method_block>
+            <method_block from="lexor.core.parser.NodeParser">
+                <function name="__init__">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="parser"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[A |NodeParser| needs to be initialized with a |Parser|
+object. If this method is to be overloaded then make sure
+that it only accepts one parameter: ``parser``. This method
+is used by |Parser| and it calls it with itself as the
+parameter.]]>
+                    </doc>
+                </function>
+                <function name="close">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="_"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[This method needs to be overloaded if the node parser
+returns a |Node| with the :meth:`make_node` method.
+
+This method will not get called if :meth:`make_node` returned
+a |Node| inside a ``list``. The close function takes as input
+the node object that :meth:`make_node` returned and it should
+decide if the node can be closed or not. If it is indeed time
+to close the node then return a ``list`` with the position
+where the node is being closed, otherwise return ``None``.
+
+If this method is not overloaded then a
+``NotImplementedError`` exception will be raised.]]>
+                    </doc>
+                </function>
+                <function name="make_node">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                        </args>
+                    </argspec>
+                </function>
+                <function name="msg">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="code"/>
+                            <arg name="pos"/>
+                            <arg name="arg" default="None"/>
+                            <arg name="uri" default="None"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[Send a message to the parser by providing one of the error
+codes defined in the style as well as the position where the
+error took place. The position has the form of a list
+containing the line and column number. Some error codes may
+provide arguments, this can be passed to `arg`. In case the
+error occurred somewhere not in the current document, perhaps
+in a string, then you may provide a new `uri` to denote the
+location.
+
+.. todo:: Provide link to parse style creation.
+
+See :ref:`` for more information on how to properly use this
+method. ]]>
+                    </doc>
+                </function>
+            </method_block>
+            <member_block from="lexor.core.parser.NodeParser">
+                <member name="__weakref__"/>
+            </member_block>
+            <method_block from="__builtin__.object">
+                <function name="__init__">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="parser"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[A |NodeParser| needs to be initialized with a |Parser|
+object. If this method is to be overloaded then make sure
+that it only accepts one parameter: ``parser``. This method
+is used by |Parser| and it calls it with itself as the
+parameter.]]>
+                    </doc>
+                </function>
+            </method_block>
+        </class>
+    </classes>
+    <functions/>
+    <data>
+        <data name="MSG">
+            <![CDATA[{'E201': '`>` not found', 'E200': '`-->` not found', 'E100': 'bogus comment started', 'E301': '`--` in comment opened at {0}:{1:2}', 'E300': '`>` found'}]]>
+        </data>
+        <data name="MSG_EXPLANATION">
+            <![CDATA[['\n    - Bogus comments are detected when the parser reads `<!` and\n      the next sequence of characters is not `--`.\n\n    - Always start comments with `<!--`.\n\n    Okay: <!--simple comment-->\n\n    E100: <!simple comment-->\n    E100: <!-simple comment-->\n    E100: <!- -simple comment-->\n', '\n    - Comments end with the character sequence `-->`.\n\n    - The parser will assume that the termination of the comment is\n      at the end of the file.\n\n    Okay: <!--x -> y-->\n\n    E200: <!--x -> y\n    E200: <!--x -> y-- >\n    E200: <!--x -> y ->\n', '\n    - When a bogus comment is started, the parser is forced to look\n      for the character `>` as its termination sequence instead of\n      `-->`.\n\n    - The original message informs you if `>` was found or not.\n\n    Okay: <!-- comment -->\n    E300: <! comment >\n    E201: <! comment\n', '\n    - The character sequence `--` must not appear within a comment.\n\n    - This sequence will be interpreted as `- `.\n\n    Okay: <!-- 1 - 2 - 3 - 4 - 5 -->\n    E301: <!-- 1 -- 2 -- 3 -- 4 -- 5 -->\n']]]>
+        </data>
+    </data>
+    <imports>
+        <other fullname="lexor.core.elements.Comment" type="type" name="Comment"/>
+        <other fullname="lexor.core.parser.NodeParser" type="type" name="NodeParser"/>
+        <other fullname="lexor.core.writer.replace" type="function" name="replace"/>
+    </imports>
+</module>
+<module name="lexor-lang_html_parser_default_entity">
+    <doc>
+        <![CDATA[HTML: ENTITY NodeParser
+
+Some characters are reserved in HTML: `<` and `&`. To be able
+to display them we need to use HTML entities. The parser defined
+in this module looks for such entities.
+
+]]>
+    </doc>
+    <classes>
+        <class name="EntityNP">
+            <bases>
+                <base name="lexor.core.parser.NodeParser"/>
+            </bases>
+            <mro>
+                <class name="lexor-lang_html_parser_default_entity.EntityNP"/>
+                <class name="lexor.core.parser.NodeParser"/>
+                <class name="__builtin__.object"/>
+            </mro>
+            <doc>
+                <![CDATA[Processes `<` and `&` characters. This parser needs to be
+called only after all the other parsers have attempted to decide
+what to do with `<` and `&`.]]>
+            </doc>
+            <method_block from="lexor-lang_html_parser_default_entity.EntityNP">
+                <function name="_handle_amp">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="parser"/>
+                            <arg name="caret"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[Helper function for make_node. ]]>
+                    </doc>
+                </function>
+                <function name="_handle_lt">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="parser"/>
+                            <arg name="caret"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[Helper function for make_node. ]]>
+                    </doc>
+                </function>
+                <function name="make_node">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                        </args>
+                    </argspec>
+                </function>
+            </method_block>
+            <method_block from="lexor.core.parser.NodeParser">
+                <function name="__init__">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="parser"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[A |NodeParser| needs to be initialized with a |Parser|
+object. If this method is to be overloaded then make sure
+that it only accepts one parameter: ``parser``. This method
+is used by |Parser| and it calls it with itself as the
+parameter.]]>
+                    </doc>
+                </function>
+                <function name="close">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="_"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[This method needs to be overloaded if the node parser
+returns a |Node| with the :meth:`make_node` method.
+
+This method will not get called if :meth:`make_node` returned
+a |Node| inside a ``list``. The close function takes as input
+the node object that :meth:`make_node` returned and it should
+decide if the node can be closed or not. If it is indeed time
+to close the node then return a ``list`` with the position
+where the node is being closed, otherwise return ``None``.
+
+If this method is not overloaded then a
+``NotImplementedError`` exception will be raised.]]>
+                    </doc>
+                </function>
+                <function name="make_node">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                        </args>
+                    </argspec>
+                </function>
+                <function name="msg">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="code"/>
+                            <arg name="pos"/>
+                            <arg name="arg" default="None"/>
+                            <arg name="uri" default="None"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[Send a message to the parser by providing one of the error
+codes defined in the style as well as the position where the
+error took place. The position has the form of a list
+containing the line and column number. Some error codes may
+provide arguments, this can be passed to `arg`. In case the
+error occurred somewhere not in the current document, perhaps
+in a string, then you may provide a new `uri` to denote the
+location.
+
+.. todo:: Provide link to parse style creation.
+
+See :ref:`` for more information on how to properly use this
+method. ]]>
+                    </doc>
+                </function>
+            </method_block>
+            <member_block from="lexor.core.parser.NodeParser">
+                <member name="__weakref__"/>
+            </member_block>
+            <method_block from="__builtin__.object">
+                <function name="__init__">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="parser"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[A |NodeParser| needs to be initialized with a |Parser|
+object. If this method is to be overloaded then make sure
+that it only accepts one parameter: ``parser``. This method
+is used by |Parser| and it calls it with itself as the
+parameter.]]>
+                    </doc>
+                </function>
+            </method_block>
+        </class>
+    </classes>
+    <functions/>
+    <data>
+        <data name="RE">
+            <![CDATA[<_sre.SRE_Pattern object at 0x10a85b030>]]>
+        </data>
+        <data name="MSG">
+            <![CDATA[{'E100': 'stray `{0}` found', 'E101': 'ignoring stray end tag `{0}`'}]]>
+        </data>
+        <data name="MSG_EXPLANATION">
+            <![CDATA[['\n    - HTML has `<` and `&` as reserved characters. To be able to\n      display `<` you must write the entity `&lt;` or `&#60;`. To\n      write `&` you can use the entity `&amp;`\n\n    Okay: a &lt; b\n    Okay: I like M&amp;Ms\n\n    E100: a < b\n    E100: I like M&Ms\n', '\n    - Stray end tags are usually an indication of an error. The short\n      message tells you the location of the stray end tag but there\n      is nothing that can be said about the possible error.\n\n    Okay: <apples><bananas></bananas></apples>\n    E101: <apples></bananas></apples>\n']]]>
+        </data>
+    </data>
+    <imports>
+        <module fullname="re" name="re"/>
+        <other fullname="lexor.core.elements.Text" type="type" name="Text"/>
+        <other fullname="lexor.core.parser.NodeParser" type="type" name="NodeParser"/>
+        <other fullname="lexor.core.elements.Entity" type="type" name="Entity"/>
+    </imports>
+</module>
+<module name="lexor-lang_html_parser_default_element">
+    <doc>
+        <![CDATA[HTML: ELEMENT NodeParser
+
+Handles all `Elements` in the form
+
+    <tagname att1="val1" att2="val2">
+        ...
+    </tagname>
+
+]]>
+    </doc>
+    <classes>
+        <class name="ElementNP">
+            <bases>
+                <base name="lexor.core.parser.NodeParser"/>
+            </bases>
+            <mro>
+                <class name="lexor-lang_html_parser_default_element.ElementNP"/>
+                <class name="lexor.core.parser.NodeParser"/>
+                <class name="__builtin__.object"/>
+            </mro>
+            <doc>
+                <![CDATA[Parses all html elements. ]]>
+            </doc>
+            <method_block from="lexor-lang_html_parser_default_element.ElementNP">
+                <function name="close">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="node"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[Return the position where the element was closed. ]]>
+                    </doc>
+                </function>
+                <function name="get_raw_text">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="parser"/>
+                            <arg name="tagname"/>
+                            <arg name="pos"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[Return the data content of the RawText object and update
+the caret. ]]>
+                    </doc>
+                </function>
+                <function name="is_element">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="parser"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[Check to see if the parser's caret is positioned in an
+element and return the index where the opening tag ends. ]]>
+                    </doc>
+                </function>
+                <function name="is_empty">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="parser"/>
+                            <arg name="index"/>
+                            <arg name="end"/>
+                            <arg name="tagname"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[Checks to see if the parser has reached '/'. ]]>
+                    </doc>
+                </function>
+                <function name="make_node">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                        </args>
+                    </argspec>
+                </function>
+                <function name="read_attributes">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="parser"/>
+                            <arg name="node"/>
+                            <arg name="end"/>
+                            <arg name="tname"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[Parses the string
+
+    parser.text[parser.caret:end]
+
+and writes the information in node.
+
+    att1="val1" att2="val2" ...
+
+This function returns True if the opening tag ends with `/`. ]]>
+                    </doc>
+                </function>
+                <function name="read_prop">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="parser"/>
+                            <arg name="node"/>
+                            <arg name="end"/>
+                            <arg name="tagname"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[Return [prop, prop_index, implied, empty]. ]]>
+                    </doc>
+                </function>
+                <function name="read_val">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="parser"/>
+                            <arg name="end"/>
+                            <arg name="tagname"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[Return the attribute value. ]]>
+                    </doc>
+                </function>
+            </method_block>
+            <method_block from="lexor.core.parser.NodeParser">
+                <function name="__init__">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="parser"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[A |NodeParser| needs to be initialized with a |Parser|
+object. If this method is to be overloaded then make sure
+that it only accepts one parameter: ``parser``. This method
+is used by |Parser| and it calls it with itself as the
+parameter.]]>
+                    </doc>
+                </function>
+                <function name="close">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="node"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[Return the position where the element was closed. ]]>
+                    </doc>
+                </function>
+                <function name="make_node">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                        </args>
+                    </argspec>
+                </function>
+                <function name="msg">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="code"/>
+                            <arg name="pos"/>
+                            <arg name="arg" default="None"/>
+                            <arg name="uri" default="None"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[Send a message to the parser by providing one of the error
+codes defined in the style as well as the position where the
+error took place. The position has the form of a list
+containing the line and column number. Some error codes may
+provide arguments, this can be passed to `arg`. In case the
+error occurred somewhere not in the current document, perhaps
+in a string, then you may provide a new `uri` to denote the
+location.
+
+.. todo:: Provide link to parse style creation.
+
+See :ref:`` for more information on how to properly use this
+method. ]]>
+                    </doc>
+                </function>
+            </method_block>
+            <member_block from="lexor.core.parser.NodeParser">
+                <member name="__weakref__"/>
+            </member_block>
+            <method_block from="__builtin__.object">
+                <function name="__init__">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="parser"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[A |NodeParser| needs to be initialized with a |Parser|
+object. If this method is to be overloaded then make sure
+that it only accepts one parameter: ``parser``. This method
+is used by |Parser| and it calls it with itself as the
+parameter.]]>
+                    </doc>
+                </function>
+            </method_block>
+        </class>
+    </classes>
+    <functions/>
+    <data>
+        <data name="RAWTEXT_ELEMENT">
+            <![CDATA[('script', 'style', 'textarea', 'title')]]>
+        </data>
+        <data name="AUTO_CLOSE">
+            <![CDATA[{'a': ['a'], 'p': ['address', 'article', 'aside', 'blockquote', 'dir', 'div', 'dl', 'fieldset', 'footer', 'form', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'header', 'hgroup', 'hr', 'main', 'menu', 'nav', 'ol', 'p', 'pre', 'section', 'table', 'ul']}]]>
+        </data>
+        <data name="RE_NOSPACE">
+            <![CDATA[<_sre.SRE_Pattern object at 0x10a776cf0>]]>
+        </data>
+        <data name="RE_NEXT">
+            <![CDATA[<_sre.SRE_Pattern object at 0x109f18e90>]]>
+        </data>
+        <data name="MSG_EXPLANATION">
+            <![CDATA[['\n    - The opening tag of an element cannot contain `<`. This means\n      that attributes cannot contain `<` in them.\n\n    Okay: <apple att1="val1"></apple>\n\n    E100: <apple att1="a < b"></apple>\n', '\n    - `RawText` elements are terminated when the appropiate closing\n      tag is found. Make sure to provide its proper closing tag.\n\n    Okay: <title>My awesome website</title>\n    Okay: <script>a < b && b > c</script>\n\n    E110: <title>My sheetie website</title >\n    E110: <title>My sheetie website< / title >\n    E110: <title>My sheetie website\n    E110: <script>a < b && b > c\n', '\n    - A `Void` Element\'s opening tag must end with `/>`. Anything in\n      between the characters `/` and `>` will be ignored.\n\n    - Non-void elements whose opening tag start with `/>` will be\n      also be interpreted correctly a message will be issued.\n\n    Okay: <img href="/path/to/image.png"/>\n    Okay: <p>starting a new paragraph</p>\n\n    E120: <img href="/path/to/image.png"/  >\n    E121: <p />starting a new paragraph</p>\n', '\n    - Attributes need to be separated by one space.\n\n    - Do not repeat attributes since the values will only get\n      overwritten.\n\n    Okay: <tag att1="val1" att2="val2">content</tag>\n    Okay: <tag att1=\'1\' att2=\'2\'></tag>\n\n    E130: <tag att1="val1"att2="val2">content</tag>\n    E160: <tag att1=\'1\' att1=\'2\'></tag>\n', '\n    A few attributes rules:\n\n    - There is a risk of joining attributes together when using\n      unquoted attribute values. This may result in having a quote or\n      equal sign inside the unquoted attribute value. [E140]\n\n    - If your attribute contains `/` then the attribute should be\n      quoted. [E141]\n\n    - Quoted attributes need to be finished by its starting quotation\n      character. [E150]\n\n    Okay: <tag att1=val1 att2="val2">content</tag>\n    E140: <tag att1=val1att2="val2">content</tag>\n\n    Okay: <img href="path/to/image.png" />\n    E141: <img href=path/to/image.png />\n\n    Okay: <tag att1="num"></tag>\n    Okay: <tag att1=\'num\'></tag>\n\n    E150: <tag att1="num></tag>\n    E150: <tag att1=\'num></tag>\n']]]>
+        </data>
+        <data name="VOID_ELEMENT">
+            <![CDATA[('area', 'base', 'basefont', 'br', 'col', 'frame', 'hr', 'img', 'input', 'isindex', 'link', 'meta', 'param', 'command', 'embed', 'keygen', 'source', 'track', 'wbr')]]>
+        </data>
+        <data name="MSG">
+            <![CDATA[{'E160': 'attribute name "{0}" has already been declared', 'E110': '`RawText` closing tag `</{0}>` not found', 'E150': 'assuming quoted attribute to close at {0}:{1:2}', 'E100': 'element discarted due to `<` at {0}:{1:2}', 'E141': '`/` found in unquoted attribute value', 'E120': '`/` not immediately followed by `>`', 'E121': 'self-closing syntax (`/>`) used in non-void element', 'E140': '`{0}` found in unquoted attribute value', 'E130': 'no space between attributes'}]]>
+        </data>
+        <data name="AUTO_CLOSE_FIRST">
+            <![CDATA[{'option': ['optgroup', 'option'], 'dd': ['dt', 'dd'], 'optgroup': ['optgroup'], 'dt': ['dt', 'dd'], 'rt': ['rt', 'rp'], 'rp': ['rt', 'rp'], 'tr': ['tr'], 'tbody': ['tbody', 'tfoot'], 'li': ['li'], 'tfoot': ['tbody'], 'th': ['td', 'th'], 'td': ['td', 'th'], 'thead': ['tbody', 'tfoot']}]]>
+        </data>
+        <data name="RE">
+            <![CDATA[<_sre.SRE_Pattern object at 0x10a705dd8>]]>
+        </data>
+    </data>
+    <imports>
+        <module fullname="re" name="re"/>
+        <other fullname="lexor.core.elements.RawText" type="type" name="RawText"/>
+        <other fullname="lexor.core.elements.Element" type="type" name="Element"/>
+        <other fullname="lexor.core.elements.Void" type="type" name="Void"/>
+        <other fullname="lexor.core.parser.NodeParser" type="type" name="NodeParser"/>
+    </imports>
+</module>

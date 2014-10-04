@@ -1,3 +1,8 @@
+.sass*
+_readthedocs/bower_components
+_readthedocs/node_modules
+_readthedocs/demo_docs/build
+
 # LaTeX #
 #########
 *.aux
