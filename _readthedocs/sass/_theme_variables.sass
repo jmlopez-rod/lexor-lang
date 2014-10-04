@@ -2,11 +2,143 @@
 // that are set in wyrm_core/wy_variables.sass. You'll find wyrm in bower_components if you're looking
 // for a reference.
 
+// Variables obtained from wy_variables.sass
+
+// Colors
+$background-color:                    #edf0f2
+$section-background-color:            hsl(0,0%,99%)
+$dropdown-color:                      $section-background-color
+$dropdown-border-color:               darken($background-color, 10%)
+
+$black:                               #000
+$gray-darker:                         #222
+$gray-dark:                           #333
+$gray:                                #555
+$gray-light:                          #999
+$gray-lighter:                        #ccc
+$white:                               #fff
+
+$green:                               #27AE60
+$offgreen:                            #1ABC9C
+$blue:                                #428bca
+$purple:                              #9B59B6
+$cobalt:                              #34495E
+$yellow:                              #F1C40F
+$orange:                              #E67E22
+$red:                                 #E74C3C
+$shell:                               #ECF0F1
+
+// Typography
+
+// bootstrap fonts
+$font-family-sans-serif:    "Helvetica Neue", Helvetica, Arial, sans-serif
+$font-family-serif:         Georgia, "Times New Roman", Times, serif
+$font-family-monospace:     Menlo, Monaco, Consolas, "Courier New", monospace
+$font-family-base:          $font-family-sans-serif
+
+$base-font-size:                      16px
+$base-font-family:                    $font-family-base
+$base-font-family-bold:               bold
+$base-line-height:                    24px
+
+$custom-font-family:                  $font-family-base
+$custom-font-family2:                 $font-family-base
+$code-font-family:                    $font-family-monospace
+
+$icon-font-family:                    "FontAwesome"
+$text-color:                          hsl(0,0%,25%)
+$text-invert:                         hsl(0,0%,100%)
+$text-code-color:                     $red
+$text-code-background-color:          $white
+$text-code-border-color:              hsl(195,7%,89%)
+$text-dark:                           lighten($text-color,15%)
+$text-medium:                         lighten($text-color,25%)
+$text-light:                          lighten($text-color,45%)
+$text-lighter:                        lighten($text-color,60%)
+
+// Tables
+$table-background-color:              transparent
+$table-border-color:                  hsl(195, 7%, 89%)
+$table-stripe-color:                  hsl(185,15%,96%)
+$table-bg-hover-color:                hsl(0,0%,85%)
+$table-head-background-color:         $table-border-color
+$table-font-size:                     90%
+$table-padding-size:                  $base-font-size / 2 $base-font-size
+
+// Forms
+$input-text-color:                    #cad2d3
+$input-background-color:              $white
+$input-border-color:                  #ccc
+$input-shadow-color:                  #ddd
+$input-focus-color:                   $gray-dark
+
+// Links
+$link-color:                          $blue
+$link-color-visited:                  darken($link-color, 10%)
+$link-color-hover:                    lighten($link-color, 50%)
+$link-color-alt:                      hsl(33, 100%, 51%)
+
+
+// Buttons
+$button-background-color:             $green
+$button-neutral-background-color:     $table-stripe-color
+
+// Spinner
+$spinner-color:                       $link-color
+
+// Menu
+$menu-top-link-color:                 hsl(0, 0%, 95%)
+$menu-background-color:               rgb(52, 49, 49)
+$menu-logo-color:                     $link-color
+$nav-desktop-width:                   300px
+$nav-desktop-position:                left
+
+// Z-index master list
+$z-index-dropdown:                    100
+$z-index-popover:                     200
+$z-index-tooltip:                     300
+$z-index-tray:                        400
+$z-index-modal:                       500
+$z-index-alert:                       600
+
+// By default wyrm expects the following font-classes
+// to exist. By default, uses Font Awesome 4.0
+// but this is completely configurable should you
+// want to use a different icon pack.
+$icon-prefix:                         "fa"
+$icon-close:                          "times"
+$icon-arrow-left:                     "arrow-left"
+$icon-arrow-right:                    "arrow-right"
+$icon-arrow-down:                     "arrow-down"
+$icon-arrow-up:                       "arrow-up"
+$icon-expand:                         "expand"
+$icon-compress:                       "compress"
+$icon-trash:                          "trash-o"
+$icon-table:                          "table"
+$icon-link:                           "link"
+$icon-quote-right:                    "quote-right"
+$icon-align-left:                     "align-left"
+$icon-align-right:                    "align-right"
+$icon-align-justify:                  "align-justify"
+$icon-align-center:                   "align-center"
+$icon-arrows-alt:                     "arrows-alt"
+$icon-picture:                        "picture-o"
+$icon-youtube:                        "youtube-play"
+$icon-code:                           "code"
+$icon-text-height:                    "text-height"
+$icon-bold:                           "bold"
+$icon-italic:                         "italic"
+$icon-strikethrough:                  "strikethrough"
+$icon-list-ul:                        "list-ul"
+$icon-list-ol:                        "list-ol"
+$icon-outdent:                        "outdent"
+$icon-indent:                         "indent"
+$icon-paperclip:                      "paperclip"
+$icon-caret-down:                     "caret-down"
+$icon-ok:                             "check-circle"
+$icon-remove:                         "times-circle"
+$icon-alert:                          "exclamation-circle"
+
 $font-awesome-dir:                    "../font/"
 $static-img:                          "../img/"
 $mathjax-color:                       $text-color
-
-$base-font-family:                    "Lato", "proxima-nova", "Helvetica Neue", Arial, sans-serif
-$custom-font-family:                  "Roboto Slab", "ff-tisa-web-pro", "Georgia", Arial, sans-serif
-$custom-font-family2:                 Georgia, serif
-$code-font-family:                    Consolas, "Andale Mono WT", "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L", Monaco, "Courier New", Courier, monospace
