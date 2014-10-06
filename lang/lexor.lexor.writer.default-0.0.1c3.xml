@@ -1,0 +1,2293 @@
+<module name="main">
+    <doc>
+        <![CDATA[LEXOR: DEFAULT Writer Style
+
+The goal of this style is to take any file, treat it as HTML and
+write it in the lexor format. The lexor format is still being
+developed. It will essentially be derived from Markdown, Kramdown,
+pandoc and other preprocessors out there.
+
+]]>
+    </doc>
+    <info>
+        <entry key="lang">lexor</entry>
+        <entry key="style">default</entry>
+        <entry key="ver">0.0.1c3</entry>
+        <entry key="description">
+            <![CDATA[Writes files in the lexor format.]]>
+        </entry>
+        <entry key="license">BSD License</entry>
+        <entry key="author">Manuel Lopez</entry>
+        <entry key="author_email">jmlopez.rod@gmail.com</entry>
+        <entry key="url">http://jmlopez-rod.github.io/lexor-lang/lexor-writer-default</entry>
+        <entry key="version">(0, 0, 1, 'rc', 3)</entry>
+        <entry key="type">writer</entry>
+    </info>
+    <defaults>
+        <entry key="del_block">
+            <![CDATA['']]>
+        </entry>
+        <entry key="width">
+            <![CDATA['70']]>
+        </entry>
+        <entry key="hashheader">
+            <![CDATA['closed']]>
+        </entry>
+        <entry key="add_block">
+            <![CDATA['']]>
+        </entry>
+        <entry key="header">
+            <![CDATA['setext']]>
+        </entry>
+    </defaults>
+    <mapping>
+        <entry key="#cdata-section" module="lexor-lang_lexor_writer_default_nw" name="CDataNW"/>
+        <entry key="#comment" module="lexor-lang_lexor_writer_default_nw" name="CommentNW"/>
+        <entry key="#doctype" module="lexor-lang_lexor_writer_default_nw" name="DoctypeNW"/>
+        <entry key="#document" module="lexor-lang_lexor_writer_default_nw" name="DocumentNW"/>
+        <entry key="#entity" module="lexor-lang_lexor_writer_default_nw" name="EntityNW"/>
+        <entry key="#text" module="lexor-lang_lexor_writer_default_nw" name="TextNW"/>
+        <entry key="__default__" module="lexor-lang_lexor_writer_default_nw" name="DefaultNW"/>
+        <entry key="a" module="lexor-lang_lexor_writer_default_nw" name="AnchorNW"/>
+        <entry key="em" module="lexor-lang_lexor_writer_default_inline" name="EmNW"/>
+        <entry key="h1" module="lexor-lang_lexor_writer_default_header" name="HeaderNW"/>
+        <entry key="h2" from-entry="h1"/>
+        <entry key="h3" from-entry="h1"/>
+        <entry key="h4" from-entry="h1"/>
+        <entry key="h5" from-entry="h1"/>
+        <entry key="h6" from-entry="h1"/>
+        <entry key="hr" module="lexor-lang_lexor_writer_default_nw" name="HRuleNW"/>
+        <entry key="i" from-entry="em"/>
+        <entry key="li" module="lexor-lang_lexor_writer_default_list" name="ListItemNW"/>
+        <entry key="list_item" module="lexor-lang_lexor_writer_default_list" name="LexorListItemNW"/>
+        <entry key="ol" from-entry="ul"/>
+        <entry key="p" module="lexor-lang_lexor_writer_default_paragraph" name="ParagraphNW"/>
+        <entry key="strong" module="lexor-lang_lexor_writer_default_inline" name="StrongNW"/>
+        <entry key="ul" module="lexor-lang_lexor_writer_default_list" name="ListNW"/>
+    </mapping>
+    <classes/>
+    <functions>
+        <function name="pre_process">
+            <argspec varargs="None" keywords="None">
+                <args>
+                    <arg name="writer"/>
+                    <arg name="_"/>
+                </args>
+            </argspec>
+            <doc>
+                <![CDATA[Sets the default width for the writer. ]]>
+            </doc>
+        </function>
+    </functions>
+    <data>
+        <data name="item">
+            <![CDATA['h6']]>
+        </data>
+        <data name="MOD">
+            <![CDATA[{'paragraph': <module 'lexor-lang_lexor_writer_default_paragraph' from '/Users/jmlopez/github/lexor-lang-repos/lexor-writer-default/default/paragraph.pyc'>, 'header': <module 'lexor-lang_lexor_writer_default_header' from '/Users/jmlopez/github/lexor-lang-repos/lexor-writer-default/default/header.pyc'>, 'nw': <module 'lexor-lang_lexor_writer_default_nw' from '/Users/jmlopez/github/lexor-lang-repos/lexor-writer-default/default/nw.pyc'>, 'list': <module 'lexor-lang_lexor_writer_default_list' from '/Users/jmlopez/github/lexor-lang-repos/lexor-writer-default/default/list.pyc'>, 'inline': <module 'lexor-lang_lexor_writer_default_inline' from '/Users/jmlopez/github/lexor-lang-repos/lexor-writer-default/default/inline.pyc'>}]]>
+        </data>
+    </data>
+    <imports>
+        <other fullname="lexor.command.lang.load_aux" type="function" name="load_aux"/>
+        <other fullname="lexor.init" type="function" name="init"/>
+    </imports>
+</module>
+<module name="lexor-lang_lexor_writer_default_inline">
+    <doc>
+        <![CDATA[LEXOR: INLINE NodeWriter
+
+Here we define inline node writers.
+
+]]>
+    </doc>
+    <classes>
+        <class name="EmNW">
+            <bases>
+                <base name="lexor.core.writer.NodeWriter"/>
+            </bases>
+            <mro>
+                <class name="lexor-lang_lexor_writer_default_inline.EmNW"/>
+                <class name="lexor.core.writer.NodeWriter"/>
+                <class name="__builtin__.object"/>
+            </mro>
+            <doc>
+                <![CDATA[Strong element display. ]]>
+            </doc>
+            <method_block from="lexor-lang_lexor_writer_default_inline.EmNW">
+                <function name="end">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="node"/>
+                        </args>
+                    </argspec>
+                </function>
+                <function name="start">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="node"/>
+                        </args>
+                    </argspec>
+                </function>
+            </method_block>
+            <cls_method_block from="lexor.core.writer.NodeWriter">
+                <function name="child">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="cls"/>
+                            <arg name="_"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[This method gets called for |Element| nodes that have
+children. If it is overwritten then it will not traverse
+through child nodes unless you return something other than
+``None``.
+
+This method by default returns ``True`` so that the |Writer|
+can traverse through the child nodes. ]]>
+                    </doc>
+                </function>
+            </cls_method_block>
+            <method_block from="lexor.core.writer.NodeWriter">
+                <function name="__init__">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="writer"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[A |NodeWriter| needs to be initialized with a |Writer|
+object. If this method is to be overloaded then make sure
+that it only accepts one parameter: `writer`. This method is
+used by the |Writer| and it calls it with itself as the
+parameter.]]>
+                    </doc>
+                </function>
+                <function name="data">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="node"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[This method gets called only by |CharData| nodes and
+should be overloaded to write their attribute ``data``,
+otherwise it will write the node's data as it is. ]]>
+                    </doc>
+                </function>
+                <function name="end">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="node"/>
+                        </args>
+                    </argspec>
+                </function>
+                <function name="start">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="node"/>
+                        </args>
+                    </argspec>
+                </function>
+                <function name="write">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="string"/>
+                            <arg name="split" default="False"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[Writes the string to a file object. The file object is
+determined by the |Writer| object that initialized this
+object (`self`). ]]>
+                    </doc>
+                </function>
+            </method_block>
+            <member_block from="lexor.core.writer.NodeWriter">
+                <member name="__weakref__"/>
+            </member_block>
+            <method_block from="__builtin__.object">
+                <function name="__init__">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="writer"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[A |NodeWriter| needs to be initialized with a |Writer|
+object. If this method is to be overloaded then make sure
+that it only accepts one parameter: `writer`. This method is
+used by the |Writer| and it calls it with itself as the
+parameter.]]>
+                    </doc>
+                </function>
+            </method_block>
+        </class>
+        <class name="StrongNW">
+            <bases>
+                <base name="lexor.core.writer.NodeWriter"/>
+            </bases>
+            <mro>
+                <class name="lexor-lang_lexor_writer_default_inline.StrongNW"/>
+                <class name="lexor.core.writer.NodeWriter"/>
+                <class name="__builtin__.object"/>
+            </mro>
+            <doc>
+                <![CDATA[Strong element display. ]]>
+            </doc>
+            <method_block from="lexor-lang_lexor_writer_default_inline.StrongNW">
+                <function name="end">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="node"/>
+                        </args>
+                    </argspec>
+                </function>
+                <function name="start">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="node"/>
+                        </args>
+                    </argspec>
+                </function>
+            </method_block>
+            <cls_method_block from="lexor.core.writer.NodeWriter">
+                <function name="child">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="cls"/>
+                            <arg name="_"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[This method gets called for |Element| nodes that have
+children. If it is overwritten then it will not traverse
+through child nodes unless you return something other than
+``None``.
+
+This method by default returns ``True`` so that the |Writer|
+can traverse through the child nodes. ]]>
+                    </doc>
+                </function>
+            </cls_method_block>
+            <method_block from="lexor.core.writer.NodeWriter">
+                <function name="__init__">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="writer"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[A |NodeWriter| needs to be initialized with a |Writer|
+object. If this method is to be overloaded then make sure
+that it only accepts one parameter: `writer`. This method is
+used by the |Writer| and it calls it with itself as the
+parameter.]]>
+                    </doc>
+                </function>
+                <function name="data">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="node"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[This method gets called only by |CharData| nodes and
+should be overloaded to write their attribute ``data``,
+otherwise it will write the node's data as it is. ]]>
+                    </doc>
+                </function>
+                <function name="end">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="node"/>
+                        </args>
+                    </argspec>
+                </function>
+                <function name="start">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="node"/>
+                        </args>
+                    </argspec>
+                </function>
+                <function name="write">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="string"/>
+                            <arg name="split" default="False"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[Writes the string to a file object. The file object is
+determined by the |Writer| object that initialized this
+object (`self`). ]]>
+                    </doc>
+                </function>
+            </method_block>
+            <member_block from="lexor.core.writer.NodeWriter">
+                <member name="__weakref__"/>
+            </member_block>
+            <method_block from="__builtin__.object">
+                <function name="__init__">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="writer"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[A |NodeWriter| needs to be initialized with a |Writer|
+object. If this method is to be overloaded then make sure
+that it only accepts one parameter: `writer`. This method is
+used by the |Writer| and it calls it with itself as the
+parameter.]]>
+                    </doc>
+                </function>
+            </method_block>
+        </class>
+    </classes>
+    <functions/>
+    <imports>
+        <module fullname="load-rel-nw" name="NW"/>
+        <other fullname="lexor.command.lang.load_rel" type="function" name="load_rel"/>
+        <other fullname="lexor.core.writer.NodeWriter" type="type" name="NodeWriter"/>
+    </imports>
+</module>
+<module name="lexor-lang_lexor_writer_default_nw">
+    <doc>
+        <![CDATA[LEXOR: DEFAULT NodeWriters
+
+Collection of NodeWriter objects to write html files in the lexor
+format without indentations and breaks lines after the first word
+that goes beyond a certain column number.
+
+]]>
+    </doc>
+    <classes>
+        <class name="EntityNW">
+            <bases>
+                <base name="lexor.core.writer.NodeWriter"/>
+            </bases>
+            <mro>
+                <class name="lexor-lang_lexor_writer_default_nw.EntityNW"/>
+                <class name="lexor.core.writer.NodeWriter"/>
+                <class name="__builtin__.object"/>
+            </mro>
+            <doc>
+                <![CDATA[Display the entity nodes. ]]>
+            </doc>
+            <method_block from="lexor-lang_lexor_writer_default_nw.EntityNW">
+                <function name="__init__">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="writer"/>
+                        </args>
+                    </argspec>
+                </function>
+                <function name="data">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="node"/>
+                        </args>
+                    </argspec>
+                </function>
+            </method_block>
+            <cls_method_block from="lexor.core.writer.NodeWriter">
+                <function name="child">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="cls"/>
+                            <arg name="_"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[This method gets called for |Element| nodes that have
+children. If it is overwritten then it will not traverse
+through child nodes unless you return something other than
+``None``.
+
+This method by default returns ``True`` so that the |Writer|
+can traverse through the child nodes. ]]>
+                    </doc>
+                </function>
+            </cls_method_block>
+            <method_block from="lexor.core.writer.NodeWriter">
+                <function name="__init__">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="writer"/>
+                        </args>
+                    </argspec>
+                </function>
+                <function name="data">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="node"/>
+                        </args>
+                    </argspec>
+                </function>
+                <function name="end">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="node"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[Overload this method to write part of the |Node| object in
+the last encounter with the |Node|. ]]>
+                    </doc>
+                </function>
+                <function name="start">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="node"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[Overload this method to write part of the |Node| object in
+the first encounter with the |Node|. ]]>
+                    </doc>
+                </function>
+                <function name="write">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="string"/>
+                            <arg name="split" default="False"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[Writes the string to a file object. The file object is
+determined by the |Writer| object that initialized this
+object (`self`). ]]>
+                    </doc>
+                </function>
+            </method_block>
+            <member_block from="lexor.core.writer.NodeWriter">
+                <member name="__weakref__"/>
+            </member_block>
+            <method_block from="__builtin__.object">
+                <function name="__init__">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="writer"/>
+                        </args>
+                    </argspec>
+                </function>
+            </method_block>
+        </class>
+        <class name="AnchorNW">
+            <bases>
+                <base name="lexor.core.writer.NodeWriter"/>
+            </bases>
+            <mro>
+                <class name="lexor-lang_lexor_writer_default_nw.AnchorNW"/>
+                <class name="lexor.core.writer.NodeWriter"/>
+                <class name="__builtin__.object"/>
+            </mro>
+            <doc>
+                <![CDATA[Anchor element display. ]]>
+            </doc>
+            <method_block from="lexor-lang_lexor_writer_default_nw.AnchorNW">
+                <function name="end">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="node"/>
+                        </args>
+                    </argspec>
+                </function>
+                <function name="start">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="_"/>
+                        </args>
+                    </argspec>
+                </function>
+            </method_block>
+            <cls_method_block from="lexor.core.writer.NodeWriter">
+                <function name="child">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="cls"/>
+                            <arg name="_"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[This method gets called for |Element| nodes that have
+children. If it is overwritten then it will not traverse
+through child nodes unless you return something other than
+``None``.
+
+This method by default returns ``True`` so that the |Writer|
+can traverse through the child nodes. ]]>
+                    </doc>
+                </function>
+            </cls_method_block>
+            <method_block from="lexor.core.writer.NodeWriter">
+                <function name="__init__">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="writer"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[A |NodeWriter| needs to be initialized with a |Writer|
+object. If this method is to be overloaded then make sure
+that it only accepts one parameter: `writer`. This method is
+used by the |Writer| and it calls it with itself as the
+parameter.]]>
+                    </doc>
+                </function>
+                <function name="data">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="node"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[This method gets called only by |CharData| nodes and
+should be overloaded to write their attribute ``data``,
+otherwise it will write the node's data as it is. ]]>
+                    </doc>
+                </function>
+                <function name="end">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="node"/>
+                        </args>
+                    </argspec>
+                </function>
+                <function name="start">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="_"/>
+                        </args>
+                    </argspec>
+                </function>
+                <function name="write">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="string"/>
+                            <arg name="split" default="False"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[Writes the string to a file object. The file object is
+determined by the |Writer| object that initialized this
+object (`self`). ]]>
+                    </doc>
+                </function>
+            </method_block>
+            <member_block from="lexor.core.writer.NodeWriter">
+                <member name="__weakref__"/>
+            </member_block>
+            <method_block from="__builtin__.object">
+                <function name="__init__">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="writer"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[A |NodeWriter| needs to be initialized with a |Writer|
+object. If this method is to be overloaded then make sure
+that it only accepts one parameter: `writer`. This method is
+used by the |Writer| and it calls it with itself as the
+parameter.]]>
+                    </doc>
+                </function>
+            </method_block>
+        </class>
+        <class name="TextNW">
+            <bases>
+                <base name="lexor.core.writer.NodeWriter"/>
+            </bases>
+            <mro>
+                <class name="lexor-lang_lexor_writer_default_nw.TextNW"/>
+                <class name="lexor.core.writer.NodeWriter"/>
+                <class name="__builtin__.object"/>
+            </mro>
+            <doc>
+                <![CDATA[Writes text nodes with multiple spaces removed. ]]>
+            </doc>
+            <method_block from="lexor-lang_lexor_writer_default_nw.TextNW">
+                <function name="data">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="node"/>
+                        </args>
+                    </argspec>
+                </function>
+            </method_block>
+            <cls_method_block from="lexor.core.writer.NodeWriter">
+                <function name="child">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="cls"/>
+                            <arg name="_"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[This method gets called for |Element| nodes that have
+children. If it is overwritten then it will not traverse
+through child nodes unless you return something other than
+``None``.
+
+This method by default returns ``True`` so that the |Writer|
+can traverse through the child nodes. ]]>
+                    </doc>
+                </function>
+            </cls_method_block>
+            <method_block from="lexor.core.writer.NodeWriter">
+                <function name="__init__">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="writer"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[A |NodeWriter| needs to be initialized with a |Writer|
+object. If this method is to be overloaded then make sure
+that it only accepts one parameter: `writer`. This method is
+used by the |Writer| and it calls it with itself as the
+parameter.]]>
+                    </doc>
+                </function>
+                <function name="data">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="node"/>
+                        </args>
+                    </argspec>
+                </function>
+                <function name="end">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="node"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[Overload this method to write part of the |Node| object in
+the last encounter with the |Node|. ]]>
+                    </doc>
+                </function>
+                <function name="start">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="node"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[Overload this method to write part of the |Node| object in
+the first encounter with the |Node|. ]]>
+                    </doc>
+                </function>
+                <function name="write">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="string"/>
+                            <arg name="split" default="False"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[Writes the string to a file object. The file object is
+determined by the |Writer| object that initialized this
+object (`self`). ]]>
+                    </doc>
+                </function>
+            </method_block>
+            <member_block from="lexor.core.writer.NodeWriter">
+                <member name="__weakref__"/>
+            </member_block>
+            <method_block from="__builtin__.object">
+                <function name="__init__">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="writer"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[A |NodeWriter| needs to be initialized with a |Writer|
+object. If this method is to be overloaded then make sure
+that it only accepts one parameter: `writer`. This method is
+used by the |Writer| and it calls it with itself as the
+parameter.]]>
+                    </doc>
+                </function>
+            </method_block>
+        </class>
+        <class name="HRuleNW">
+            <bases>
+                <base name="lexor.core.writer.NodeWriter"/>
+            </bases>
+            <mro>
+                <class name="lexor-lang_lexor_writer_default_nw.HRuleNW"/>
+                <class name="lexor.core.writer.NodeWriter"/>
+                <class name="__builtin__.object"/>
+            </mro>
+            <doc>
+                <![CDATA[Display hr element. ]]>
+            </doc>
+            <method_block from="lexor-lang_lexor_writer_default_nw.HRuleNW">
+                <function name="start">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="_"/>
+                        </args>
+                    </argspec>
+                </function>
+            </method_block>
+            <cls_method_block from="lexor.core.writer.NodeWriter">
+                <function name="child">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="cls"/>
+                            <arg name="_"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[This method gets called for |Element| nodes that have
+children. If it is overwritten then it will not traverse
+through child nodes unless you return something other than
+``None``.
+
+This method by default returns ``True`` so that the |Writer|
+can traverse through the child nodes. ]]>
+                    </doc>
+                </function>
+            </cls_method_block>
+            <method_block from="lexor.core.writer.NodeWriter">
+                <function name="__init__">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="writer"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[A |NodeWriter| needs to be initialized with a |Writer|
+object. If this method is to be overloaded then make sure
+that it only accepts one parameter: `writer`. This method is
+used by the |Writer| and it calls it with itself as the
+parameter.]]>
+                    </doc>
+                </function>
+                <function name="data">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="node"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[This method gets called only by |CharData| nodes and
+should be overloaded to write their attribute ``data``,
+otherwise it will write the node's data as it is. ]]>
+                    </doc>
+                </function>
+                <function name="end">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="node"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[Overload this method to write part of the |Node| object in
+the last encounter with the |Node|. ]]>
+                    </doc>
+                </function>
+                <function name="start">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="_"/>
+                        </args>
+                    </argspec>
+                </function>
+                <function name="write">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="string"/>
+                            <arg name="split" default="False"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[Writes the string to a file object. The file object is
+determined by the |Writer| object that initialized this
+object (`self`). ]]>
+                    </doc>
+                </function>
+            </method_block>
+            <member_block from="lexor.core.writer.NodeWriter">
+                <member name="__weakref__"/>
+            </member_block>
+            <method_block from="__builtin__.object">
+                <function name="__init__">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="writer"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[A |NodeWriter| needs to be initialized with a |Writer|
+object. If this method is to be overloaded then make sure
+that it only accepts one parameter: `writer`. This method is
+used by the |Writer| and it calls it with itself as the
+parameter.]]>
+                    </doc>
+                </function>
+            </method_block>
+        </class>
+        <class name="DoctypeNW">
+            <bases>
+                <base name="lexor.core.writer.NodeWriter"/>
+            </bases>
+            <mro>
+                <class name="lexor-lang_lexor_writer_default_nw.DoctypeNW"/>
+                <class name="lexor.core.writer.NodeWriter"/>
+                <class name="__builtin__.object"/>
+            </mro>
+            <doc>
+                <![CDATA[Writes the doctype node: `<!DOCTYPE ...>`. ]]>
+            </doc>
+            <method_block from="lexor-lang_lexor_writer_default_nw.DoctypeNW">
+                <function name="data">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="node"/>
+                        </args>
+                    </argspec>
+                </function>
+                <function name="end">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="node"/>
+                        </args>
+                    </argspec>
+                </function>
+                <function name="start">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="node"/>
+                        </args>
+                    </argspec>
+                </function>
+            </method_block>
+            <cls_method_block from="lexor.core.writer.NodeWriter">
+                <function name="child">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="cls"/>
+                            <arg name="_"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[This method gets called for |Element| nodes that have
+children. If it is overwritten then it will not traverse
+through child nodes unless you return something other than
+``None``.
+
+This method by default returns ``True`` so that the |Writer|
+can traverse through the child nodes. ]]>
+                    </doc>
+                </function>
+            </cls_method_block>
+            <method_block from="lexor.core.writer.NodeWriter">
+                <function name="__init__">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="writer"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[A |NodeWriter| needs to be initialized with a |Writer|
+object. If this method is to be overloaded then make sure
+that it only accepts one parameter: `writer`. This method is
+used by the |Writer| and it calls it with itself as the
+parameter.]]>
+                    </doc>
+                </function>
+                <function name="data">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="node"/>
+                        </args>
+                    </argspec>
+                </function>
+                <function name="end">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="node"/>
+                        </args>
+                    </argspec>
+                </function>
+                <function name="start">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="node"/>
+                        </args>
+                    </argspec>
+                </function>
+                <function name="write">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="string"/>
+                            <arg name="split" default="False"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[Writes the string to a file object. The file object is
+determined by the |Writer| object that initialized this
+object (`self`). ]]>
+                    </doc>
+                </function>
+            </method_block>
+            <member_block from="lexor.core.writer.NodeWriter">
+                <member name="__weakref__"/>
+            </member_block>
+            <method_block from="__builtin__.object">
+                <function name="__init__">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="writer"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[A |NodeWriter| needs to be initialized with a |Writer|
+object. If this method is to be overloaded then make sure
+that it only accepts one parameter: `writer`. This method is
+used by the |Writer| and it calls it with itself as the
+parameter.]]>
+                    </doc>
+                </function>
+            </method_block>
+        </class>
+        <class name="CommentNW">
+            <bases>
+                <base name="lexor.core.writer.NodeWriter"/>
+            </bases>
+            <mro>
+                <class name="lexor-lang_lexor_writer_default_nw.CommentNW"/>
+                <class name="lexor.core.writer.NodeWriter"/>
+                <class name="__builtin__.object"/>
+            </mro>
+            <doc>
+                <![CDATA[Comment can also follow the tree structure. They have to be
+formatted to reflect this. ]]>
+            </doc>
+            <method_block from="lexor-lang_lexor_writer_default_nw.CommentNW">
+                <function name="end">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="node"/>
+                        </args>
+                    </argspec>
+                </function>
+                <function name="start">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="node"/>
+                        </args>
+                    </argspec>
+                </function>
+            </method_block>
+            <cls_method_block from="lexor.core.writer.NodeWriter">
+                <function name="child">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="cls"/>
+                            <arg name="_"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[This method gets called for |Element| nodes that have
+children. If it is overwritten then it will not traverse
+through child nodes unless you return something other than
+``None``.
+
+This method by default returns ``True`` so that the |Writer|
+can traverse through the child nodes. ]]>
+                    </doc>
+                </function>
+            </cls_method_block>
+            <method_block from="lexor.core.writer.NodeWriter">
+                <function name="__init__">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="writer"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[A |NodeWriter| needs to be initialized with a |Writer|
+object. If this method is to be overloaded then make sure
+that it only accepts one parameter: `writer`. This method is
+used by the |Writer| and it calls it with itself as the
+parameter.]]>
+                    </doc>
+                </function>
+                <function name="data">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="node"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[This method gets called only by |CharData| nodes and
+should be overloaded to write their attribute ``data``,
+otherwise it will write the node's data as it is. ]]>
+                    </doc>
+                </function>
+                <function name="end">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="node"/>
+                        </args>
+                    </argspec>
+                </function>
+                <function name="start">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="node"/>
+                        </args>
+                    </argspec>
+                </function>
+                <function name="write">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="string"/>
+                            <arg name="split" default="False"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[Writes the string to a file object. The file object is
+determined by the |Writer| object that initialized this
+object (`self`). ]]>
+                    </doc>
+                </function>
+            </method_block>
+            <member_block from="lexor.core.writer.NodeWriter">
+                <member name="__weakref__"/>
+            </member_block>
+            <method_block from="__builtin__.object">
+                <function name="__init__">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="writer"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[A |NodeWriter| needs to be initialized with a |Writer|
+object. If this method is to be overloaded then make sure
+that it only accepts one parameter: `writer`. This method is
+used by the |Writer| and it calls it with itself as the
+parameter.]]>
+                    </doc>
+                </function>
+            </method_block>
+        </class>
+        <class name="CDataNW">
+            <bases>
+                <base name="lexor.core.writer.NodeWriter"/>
+            </bases>
+            <mro>
+                <class name="lexor-lang_lexor_writer_default_nw.CDataNW"/>
+                <class name="lexor.core.writer.NodeWriter"/>
+                <class name="__builtin__.object"/>
+            </mro>
+            <doc>
+                <![CDATA[Writes the CDATA node. ]]>
+            </doc>
+            <method_block from="lexor-lang_lexor_writer_default_nw.CDataNW">
+                <function name="data">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="node"/>
+                        </args>
+                    </argspec>
+                </function>
+                <function name="end">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="node"/>
+                        </args>
+                    </argspec>
+                </function>
+                <function name="start">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="node"/>
+                        </args>
+                    </argspec>
+                </function>
+            </method_block>
+            <cls_method_block from="lexor.core.writer.NodeWriter">
+                <function name="child">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="cls"/>
+                            <arg name="_"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[This method gets called for |Element| nodes that have
+children. If it is overwritten then it will not traverse
+through child nodes unless you return something other than
+``None``.
+
+This method by default returns ``True`` so that the |Writer|
+can traverse through the child nodes. ]]>
+                    </doc>
+                </function>
+            </cls_method_block>
+            <method_block from="lexor.core.writer.NodeWriter">
+                <function name="__init__">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="writer"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[A |NodeWriter| needs to be initialized with a |Writer|
+object. If this method is to be overloaded then make sure
+that it only accepts one parameter: `writer`. This method is
+used by the |Writer| and it calls it with itself as the
+parameter.]]>
+                    </doc>
+                </function>
+                <function name="data">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="node"/>
+                        </args>
+                    </argspec>
+                </function>
+                <function name="end">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="node"/>
+                        </args>
+                    </argspec>
+                </function>
+                <function name="start">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="node"/>
+                        </args>
+                    </argspec>
+                </function>
+                <function name="write">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="string"/>
+                            <arg name="split" default="False"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[Writes the string to a file object. The file object is
+determined by the |Writer| object that initialized this
+object (`self`). ]]>
+                    </doc>
+                </function>
+            </method_block>
+            <member_block from="lexor.core.writer.NodeWriter">
+                <member name="__weakref__"/>
+            </member_block>
+            <method_block from="__builtin__.object">
+                <function name="__init__">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="writer"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[A |NodeWriter| needs to be initialized with a |Writer|
+object. If this method is to be overloaded then make sure
+that it only accepts one parameter: `writer`. This method is
+used by the |Writer| and it calls it with itself as the
+parameter.]]>
+                    </doc>
+                </function>
+            </method_block>
+        </class>
+        <class name="DefaultNW">
+            <bases>
+                <base name="lexor.core.writer.NodeWriter"/>
+            </bases>
+            <mro>
+                <class name="lexor-lang_lexor_writer_default_nw.DefaultNW"/>
+                <class name="lexor.core.writer.NodeWriter"/>
+                <class name="__builtin__.object"/>
+            </mro>
+            <doc>
+                <![CDATA[Default way of writing LEXOR elements. ]]>
+            </doc>
+            <method_block from="lexor-lang_lexor_writer_default_nw.DefaultNW">
+                <function name="child">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="node"/>
+                        </args>
+                    </argspec>
+                </function>
+                <function name="data">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="node"/>
+                        </args>
+                    </argspec>
+                </function>
+                <function name="end">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="node"/>
+                        </args>
+                    </argspec>
+                </function>
+                <function name="start">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="node"/>
+                        </args>
+                    </argspec>
+                </function>
+            </method_block>
+            <method_block from="lexor.core.writer.NodeWriter">
+                <function name="__init__">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="writer"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[A |NodeWriter| needs to be initialized with a |Writer|
+object. If this method is to be overloaded then make sure
+that it only accepts one parameter: `writer`. This method is
+used by the |Writer| and it calls it with itself as the
+parameter.]]>
+                    </doc>
+                </function>
+                <function name="child">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="node"/>
+                        </args>
+                    </argspec>
+                </function>
+                <function name="data">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="node"/>
+                        </args>
+                    </argspec>
+                </function>
+                <function name="end">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="node"/>
+                        </args>
+                    </argspec>
+                </function>
+                <function name="start">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="node"/>
+                        </args>
+                    </argspec>
+                </function>
+                <function name="write">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="string"/>
+                            <arg name="split" default="False"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[Writes the string to a file object. The file object is
+determined by the |Writer| object that initialized this
+object (`self`). ]]>
+                    </doc>
+                </function>
+            </method_block>
+            <member_block from="lexor.core.writer.NodeWriter">
+                <member name="__weakref__"/>
+            </member_block>
+            <method_block from="__builtin__.object">
+                <function name="__init__">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="writer"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[A |NodeWriter| needs to be initialized with a |Writer|
+object. If this method is to be overloaded then make sure
+that it only accepts one parameter: `writer`. This method is
+used by the |Writer| and it calls it with itself as the
+parameter.]]>
+                    </doc>
+                </function>
+            </method_block>
+        </class>
+        <class name="DocumentNW">
+            <bases>
+                <base name="lexor.core.writer.NodeWriter"/>
+            </bases>
+            <mro>
+                <class name="lexor-lang_lexor_writer_default_nw.DocumentNW"/>
+                <class name="lexor.core.writer.NodeWriter"/>
+                <class name="__builtin__.object"/>
+            </mro>
+            <doc>
+                <![CDATA[Finish document with a new line character. ]]>
+            </doc>
+            <method_block from="lexor-lang_lexor_writer_default_nw.DocumentNW">
+                <function name="end">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="node"/>
+                        </args>
+                    </argspec>
+                </function>
+            </method_block>
+            <cls_method_block from="lexor.core.writer.NodeWriter">
+                <function name="child">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="cls"/>
+                            <arg name="_"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[This method gets called for |Element| nodes that have
+children. If it is overwritten then it will not traverse
+through child nodes unless you return something other than
+``None``.
+
+This method by default returns ``True`` so that the |Writer|
+can traverse through the child nodes. ]]>
+                    </doc>
+                </function>
+            </cls_method_block>
+            <method_block from="lexor.core.writer.NodeWriter">
+                <function name="__init__">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="writer"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[A |NodeWriter| needs to be initialized with a |Writer|
+object. If this method is to be overloaded then make sure
+that it only accepts one parameter: `writer`. This method is
+used by the |Writer| and it calls it with itself as the
+parameter.]]>
+                    </doc>
+                </function>
+                <function name="data">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="node"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[This method gets called only by |CharData| nodes and
+should be overloaded to write their attribute ``data``,
+otherwise it will write the node's data as it is. ]]>
+                    </doc>
+                </function>
+                <function name="end">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="node"/>
+                        </args>
+                    </argspec>
+                </function>
+                <function name="start">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="node"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[Overload this method to write part of the |Node| object in
+the first encounter with the |Node|. ]]>
+                    </doc>
+                </function>
+                <function name="write">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="string"/>
+                            <arg name="split" default="False"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[Writes the string to a file object. The file object is
+determined by the |Writer| object that initialized this
+object (`self`). ]]>
+                    </doc>
+                </function>
+            </method_block>
+            <member_block from="lexor.core.writer.NodeWriter">
+                <member name="__weakref__"/>
+            </member_block>
+            <method_block from="__builtin__.object">
+                <function name="__init__">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="writer"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[A |NodeWriter| needs to be initialized with a |Writer|
+object. If this method is to be overloaded then make sure
+that it only accepts one parameter: `writer`. This method is
+used by the |Writer| and it calls it with itself as the
+parameter.]]>
+                    </doc>
+                </function>
+            </method_block>
+        </class>
+    </classes>
+    <functions>
+        <function name="format_attributes">
+            <argspec varargs="None" keywords="None">
+                <args>
+                    <arg name="node"/>
+                    <arg name="exclude" default="None"/>
+                </args>
+            </argspec>
+            <doc>
+                <![CDATA[Format a node's attribute. ]]>
+            </doc>
+        </function>
+    </functions>
+    <data>
+        <data name="BLOCK">
+            <![CDATA[['address', 'article', 'aside', 'blockquote', 'dir', 'div', 'dl', 'fieldset', 'footer', 'form', 'header', 'hgroup', 'hr', 'main', 'menu', 'nav', 'pre', 'section', 'table', 'ol', 'ul', 'li', 'link', '#doctype', 'head', 'body', 'table', 'script', 'style', 'textarea', 'title']]]>
+        </data>
+        <data name="RAWTEXT">
+            <![CDATA[('script', 'style', 'textarea', 'title')]]>
+        </data>
+        <data name="RE">
+            <![CDATA[<_sre.SRE_Pattern object at 0x10f1c8750>]]>
+        </data>
+        <data name="TW">
+            <![CDATA[<textwrap.TextWrapper instance at 0x10f2508c0>]]>
+        </data>
+    </data>
+    <imports>
+        <module fullname="lexor.core.elements" name="core"/>
+        <module fullname="textwrap" name="textwrap"/>
+        <module fullname="re" name="re"/>
+        <other fullname="lexor.core.writer.NodeWriter" type="type" name="NodeWriter"/>
+    </imports>
+</module>
+<module name="lexor-lang_lexor_writer_default_paragraph">
+    <doc>
+        <![CDATA[LEXOR: PARAGRAPH NodeWriter
+
+Node writer description.
+
+]]>
+    </doc>
+    <classes>
+        <class name="ParagraphNW">
+            <bases>
+                <base name="lexor.core.writer.NodeWriter"/>
+            </bases>
+            <mro>
+                <class name="lexor-lang_lexor_writer_default_paragraph.ParagraphNW"/>
+                <class name="lexor.core.writer.NodeWriter"/>
+                <class name="__builtin__.object"/>
+            </mro>
+            <doc>
+                <![CDATA[Write a paragraph. ]]>
+            </doc>
+            <method_block from="lexor-lang_lexor_writer_default_paragraph.ParagraphNW">
+                <function name="end">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="node"/>
+                        </args>
+                    </argspec>
+                </function>
+                <function name="start">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="node"/>
+                        </args>
+                    </argspec>
+                </function>
+            </method_block>
+            <cls_method_block from="lexor.core.writer.NodeWriter">
+                <function name="child">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="cls"/>
+                            <arg name="_"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[This method gets called for |Element| nodes that have
+children. If it is overwritten then it will not traverse
+through child nodes unless you return something other than
+``None``.
+
+This method by default returns ``True`` so that the |Writer|
+can traverse through the child nodes. ]]>
+                    </doc>
+                </function>
+            </cls_method_block>
+            <method_block from="lexor.core.writer.NodeWriter">
+                <function name="__init__">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="writer"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[A |NodeWriter| needs to be initialized with a |Writer|
+object. If this method is to be overloaded then make sure
+that it only accepts one parameter: `writer`. This method is
+used by the |Writer| and it calls it with itself as the
+parameter.]]>
+                    </doc>
+                </function>
+                <function name="data">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="node"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[This method gets called only by |CharData| nodes and
+should be overloaded to write their attribute ``data``,
+otherwise it will write the node's data as it is. ]]>
+                    </doc>
+                </function>
+                <function name="end">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="node"/>
+                        </args>
+                    </argspec>
+                </function>
+                <function name="start">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="node"/>
+                        </args>
+                    </argspec>
+                </function>
+                <function name="write">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="string"/>
+                            <arg name="split" default="False"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[Writes the string to a file object. The file object is
+determined by the |Writer| object that initialized this
+object (`self`). ]]>
+                    </doc>
+                </function>
+            </method_block>
+            <member_block from="lexor.core.writer.NodeWriter">
+                <member name="__weakref__"/>
+            </member_block>
+            <method_block from="__builtin__.object">
+                <function name="__init__">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="writer"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[A |NodeWriter| needs to be initialized with a |Writer|
+object. If this method is to be overloaded then make sure
+that it only accepts one parameter: `writer`. This method is
+used by the |Writer| and it calls it with itself as the
+parameter.]]>
+                    </doc>
+                </function>
+            </method_block>
+        </class>
+    </classes>
+    <functions/>
+    <imports>
+        <module fullname="load-rel-nw" name="NW"/>
+        <other fullname="lexor.command.lang.load_rel" type="function" name="load_rel"/>
+        <other fullname="lexor.core.writer.NodeWriter" type="type" name="NodeWriter"/>
+    </imports>
+</module>
+<module name="lexor-lang_lexor_writer_default_header">
+    <doc>
+        <![CDATA[LEXOR: HEADER NodeWriter
+
+Lexor supports Setext and atx style headers. Setext style is enabled
+by default. When the atx style is enabled then you may specify if
+matching hashes should be placed at the end of the header.
+
+]]>
+    </doc>
+    <classes>
+        <class name="HeaderNW">
+            <bases>
+                <base name="lexor.core.writer.NodeWriter"/>
+            </bases>
+            <mro>
+                <class name="lexor-lang_lexor_writer_default_header.HeaderNW"/>
+                <class name="lexor.core.writer.NodeWriter"/>
+                <class name="__builtin__.object"/>
+            </mro>
+            <doc>
+                <![CDATA[Writes a header element. ]]>
+            </doc>
+            <method_block from="lexor-lang_lexor_writer_default_header.HeaderNW">
+                <function name="end">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="node"/>
+                        </args>
+                    </argspec>
+                </function>
+                <function name="start">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="node"/>
+                        </args>
+                    </argspec>
+                </function>
+            </method_block>
+            <cls_method_block from="lexor.core.writer.NodeWriter">
+                <function name="child">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="cls"/>
+                            <arg name="_"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[This method gets called for |Element| nodes that have
+children. If it is overwritten then it will not traverse
+through child nodes unless you return something other than
+``None``.
+
+This method by default returns ``True`` so that the |Writer|
+can traverse through the child nodes. ]]>
+                    </doc>
+                </function>
+            </cls_method_block>
+            <method_block from="lexor.core.writer.NodeWriter">
+                <function name="__init__">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="writer"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[A |NodeWriter| needs to be initialized with a |Writer|
+object. If this method is to be overloaded then make sure
+that it only accepts one parameter: `writer`. This method is
+used by the |Writer| and it calls it with itself as the
+parameter.]]>
+                    </doc>
+                </function>
+                <function name="data">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="node"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[This method gets called only by |CharData| nodes and
+should be overloaded to write their attribute ``data``,
+otherwise it will write the node's data as it is. ]]>
+                    </doc>
+                </function>
+                <function name="end">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="node"/>
+                        </args>
+                    </argspec>
+                </function>
+                <function name="start">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="node"/>
+                        </args>
+                    </argspec>
+                </function>
+                <function name="write">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="string"/>
+                            <arg name="split" default="False"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[Writes the string to a file object. The file object is
+determined by the |Writer| object that initialized this
+object (`self`). ]]>
+                    </doc>
+                </function>
+            </method_block>
+            <member_block from="lexor.core.writer.NodeWriter">
+                <member name="__weakref__"/>
+            </member_block>
+            <method_block from="__builtin__.object">
+                <function name="__init__">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="writer"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[A |NodeWriter| needs to be initialized with a |Writer|
+object. If this method is to be overloaded then make sure
+that it only accepts one parameter: `writer`. This method is
+used by the |Writer| and it calls it with itself as the
+parameter.]]>
+                    </doc>
+                </function>
+            </method_block>
+        </class>
+    </classes>
+    <functions/>
+    <imports>
+        <module fullname="load-rel-nw" name="NW"/>
+        <other fullname="lexor.command.lang.load_rel" type="function" name="load_rel"/>
+        <other fullname="lexor.core.writer.NodeWriter" type="type" name="NodeWriter"/>
+    </imports>
+</module>
+<module name="lexor-lang_lexor_writer_default_list">
+    <doc>
+        <![CDATA[LEXOR: LIST NodeWriter
+
+When an `ol` or `ul` tag is encountered lexor enters its `list` mode.
+The list mode is a tag with no attributes. It is nothing but a marker
+that lets you know that you can create lists. An item must begin with:
+
+%%{list}
+* `*` for unordered lists.
+* `+` for ordered lists.
+%%
+
+To tell lexor that you want a sublist simply repeat the starting
+character. For instance, writing `***` will tell lexor that we are
+starting a list in level 3.
+
+If your list have some attributes you may specify them by using an
+attribute list right after the item declaration:
+
+    ***{#ul-id}{#li-id}
+
+If two attribute lists are declared then the first one belongs to the
+`ul` or `ol` tag, the second one belongs to the `li` tag. If only one
+attribute list is specified then it belongs to the `li` tag.
+
+]]>
+    </doc>
+    <classes>
+        <class name="ListNW">
+            <bases>
+                <base name="lexor.core.writer.NodeWriter"/>
+            </bases>
+            <mro>
+                <class name="lexor-lang_lexor_writer_default_list.ListNW"/>
+                <class name="lexor.core.writer.NodeWriter"/>
+                <class name="__builtin__.object"/>
+            </mro>
+            <doc>
+                <![CDATA[Manage lists. ]]>
+            </doc>
+            <method_block from="lexor-lang_lexor_writer_default_list.ListNW">
+                <function name="end">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="node"/>
+                        </args>
+                    </argspec>
+                </function>
+                <function name="start">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="node"/>
+                        </args>
+                    </argspec>
+                </function>
+            </method_block>
+            <cls_method_block from="lexor.core.writer.NodeWriter">
+                <function name="child">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="cls"/>
+                            <arg name="_"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[This method gets called for |Element| nodes that have
+children. If it is overwritten then it will not traverse
+through child nodes unless you return something other than
+``None``.
+
+This method by default returns ``True`` so that the |Writer|
+can traverse through the child nodes. ]]>
+                    </doc>
+                </function>
+            </cls_method_block>
+            <method_block from="lexor.core.writer.NodeWriter">
+                <function name="__init__">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="writer"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[A |NodeWriter| needs to be initialized with a |Writer|
+object. If this method is to be overloaded then make sure
+that it only accepts one parameter: `writer`. This method is
+used by the |Writer| and it calls it with itself as the
+parameter.]]>
+                    </doc>
+                </function>
+                <function name="data">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="node"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[This method gets called only by |CharData| nodes and
+should be overloaded to write their attribute ``data``,
+otherwise it will write the node's data as it is. ]]>
+                    </doc>
+                </function>
+                <function name="end">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="node"/>
+                        </args>
+                    </argspec>
+                </function>
+                <function name="start">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="node"/>
+                        </args>
+                    </argspec>
+                </function>
+                <function name="write">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="string"/>
+                            <arg name="split" default="False"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[Writes the string to a file object. The file object is
+determined by the |Writer| object that initialized this
+object (`self`). ]]>
+                    </doc>
+                </function>
+            </method_block>
+            <member_block from="lexor.core.writer.NodeWriter">
+                <member name="__weakref__"/>
+            </member_block>
+            <method_block from="__builtin__.object">
+                <function name="__init__">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="writer"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[A |NodeWriter| needs to be initialized with a |Writer|
+object. If this method is to be overloaded then make sure
+that it only accepts one parameter: `writer`. This method is
+used by the |Writer| and it calls it with itself as the
+parameter.]]>
+                    </doc>
+                </function>
+            </method_block>
+        </class>
+        <class name="ListItemNW">
+            <bases>
+                <base name="lexor.core.writer.NodeWriter"/>
+            </bases>
+            <mro>
+                <class name="lexor-lang_lexor_writer_default_list.ListItemNW"/>
+                <class name="lexor.core.writer.NodeWriter"/>
+                <class name="__builtin__.object"/>
+            </mro>
+            <doc>
+                <![CDATA[List elements display. ]]>
+            </doc>
+            <method_block from="lexor-lang_lexor_writer_default_list.ListItemNW">
+                <function name="end">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="_"/>
+                        </args>
+                    </argspec>
+                </function>
+                <function name="start">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="node"/>
+                        </args>
+                    </argspec>
+                </function>
+            </method_block>
+            <cls_method_block from="lexor.core.writer.NodeWriter">
+                <function name="child">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="cls"/>
+                            <arg name="_"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[This method gets called for |Element| nodes that have
+children. If it is overwritten then it will not traverse
+through child nodes unless you return something other than
+``None``.
+
+This method by default returns ``True`` so that the |Writer|
+can traverse through the child nodes. ]]>
+                    </doc>
+                </function>
+            </cls_method_block>
+            <method_block from="lexor.core.writer.NodeWriter">
+                <function name="__init__">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="writer"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[A |NodeWriter| needs to be initialized with a |Writer|
+object. If this method is to be overloaded then make sure
+that it only accepts one parameter: `writer`. This method is
+used by the |Writer| and it calls it with itself as the
+parameter.]]>
+                    </doc>
+                </function>
+                <function name="data">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="node"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[This method gets called only by |CharData| nodes and
+should be overloaded to write their attribute ``data``,
+otherwise it will write the node's data as it is. ]]>
+                    </doc>
+                </function>
+                <function name="end">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="_"/>
+                        </args>
+                    </argspec>
+                </function>
+                <function name="start">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="node"/>
+                        </args>
+                    </argspec>
+                </function>
+                <function name="write">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="string"/>
+                            <arg name="split" default="False"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[Writes the string to a file object. The file object is
+determined by the |Writer| object that initialized this
+object (`self`). ]]>
+                    </doc>
+                </function>
+            </method_block>
+            <member_block from="lexor.core.writer.NodeWriter">
+                <member name="__weakref__"/>
+            </member_block>
+            <method_block from="__builtin__.object">
+                <function name="__init__">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="writer"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[A |NodeWriter| needs to be initialized with a |Writer|
+object. If this method is to be overloaded then make sure
+that it only accepts one parameter: `writer`. This method is
+used by the |Writer| and it calls it with itself as the
+parameter.]]>
+                    </doc>
+                </function>
+            </method_block>
+        </class>
+        <class name="LexorListItemNW">
+            <bases>
+                <base name="lexor.core.writer.NodeWriter"/>
+            </bases>
+            <mro>
+                <class name="lexor-lang_lexor_writer_default_list.LexorListItemNW"/>
+                <class name="lexor.core.writer.NodeWriter"/>
+                <class name="__builtin__.object"/>
+            </mro>
+            <doc>
+                <![CDATA[Display Lexor list items. ]]>
+            </doc>
+            <method_block from="lexor-lang_lexor_writer_default_list.LexorListItemNW">
+                <function name="end">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="node"/>
+                        </args>
+                    </argspec>
+                </function>
+                <function name="start">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="node"/>
+                        </args>
+                    </argspec>
+                </function>
+            </method_block>
+            <cls_method_block from="lexor.core.writer.NodeWriter">
+                <function name="child">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="cls"/>
+                            <arg name="_"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[This method gets called for |Element| nodes that have
+children. If it is overwritten then it will not traverse
+through child nodes unless you return something other than
+``None``.
+
+This method by default returns ``True`` so that the |Writer|
+can traverse through the child nodes. ]]>
+                    </doc>
+                </function>
+            </cls_method_block>
+            <method_block from="lexor.core.writer.NodeWriter">
+                <function name="__init__">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="writer"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[A |NodeWriter| needs to be initialized with a |Writer|
+object. If this method is to be overloaded then make sure
+that it only accepts one parameter: `writer`. This method is
+used by the |Writer| and it calls it with itself as the
+parameter.]]>
+                    </doc>
+                </function>
+                <function name="data">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="node"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[This method gets called only by |CharData| nodes and
+should be overloaded to write their attribute ``data``,
+otherwise it will write the node's data as it is. ]]>
+                    </doc>
+                </function>
+                <function name="end">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="node"/>
+                        </args>
+                    </argspec>
+                </function>
+                <function name="start">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="node"/>
+                        </args>
+                    </argspec>
+                </function>
+                <function name="write">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="string"/>
+                            <arg name="split" default="False"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[Writes the string to a file object. The file object is
+determined by the |Writer| object that initialized this
+object (`self`). ]]>
+                    </doc>
+                </function>
+            </method_block>
+            <member_block from="lexor.core.writer.NodeWriter">
+                <member name="__weakref__"/>
+            </member_block>
+            <method_block from="__builtin__.object">
+                <function name="__init__">
+                    <argspec varargs="None" keywords="None">
+                        <args>
+                            <arg name="self"/>
+                            <arg name="writer"/>
+                        </args>
+                    </argspec>
+                    <doc>
+                        <![CDATA[A |NodeWriter| needs to be initialized with a |Writer|
+object. If this method is to be overloaded then make sure
+that it only accepts one parameter: `writer`. This method is
+used by the |Writer| and it calls it with itself as the
+parameter.]]>
+                    </doc>
+                </function>
+            </method_block>
+        </class>
+    </classes>
+    <functions/>
+    <imports>
+        <module fullname="load-rel-nw" name="NW"/>
+        <other fullname="lexor.command.lang.load_rel" type="function" name="load_rel"/>
+        <other fullname="lexor.core.writer.NodeWriter" type="type" name="NodeWriter"/>
+    </imports>
+</module>

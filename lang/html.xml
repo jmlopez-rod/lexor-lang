@@ -1,0 +1,51 @@
+<module name="main">
+    <doc>
+        <![CDATA[
+HTML: DEFAULT Parsing Style
+===========================
+
+This style attempts to follow all the HTML rules. It captures all the
+information in the file. This includes all the extra spaces, new
+lines and tab characters the file might contain.
+
+]]>
+    </doc>
+    <info>
+        <entry key="lang">html</entry>
+        <entry key="style">default</entry>
+        <entry key="ver">0.0.1</entry>
+        <entry key="description">
+            <![CDATA[Parse HTML files using all the valid rules.]]>
+        </entry>
+        <entry key="license">BSD License</entry>
+        <entry key="author">Manuel Lopez</entry>
+        <entry key="author_email">jmlopez.rod@gmail.com</entry>
+        <entry key="url">http://jmlopez-rod.github.io/lexor-lang/html-parser-default</entry>
+        <entry key="version">(0, 0, 1, 'final', 0)</entry>
+        <entry key="type">parser</entry>
+    </info>
+    <mapping>
+        <entry key="__default__">
+            <checker>
+                <![CDATA[<&]]>
+            </checker>
+            <processor module="lexor-lang_html_parser_default_element" name="ElementNP"/>
+            <processor module="lexor-lang_html_parser_default_cdata" name="CDataNP"/>
+            <processor module="lexor-lang_html_parser_default_doctype" name="DocumentTypeNP"/>
+            <processor module="lexor-lang_html_parser_default_comment" name="CommentNP"/>
+            <processor module="lexor-lang_html_parser_default_pi" name="ProcessingInstructionNP"/>
+            <processor module="lexor-lang_html_parser_default_entity" name="EntityNP"/>
+        </entry>
+    </mapping>
+    <classes/>
+    <functions/>
+    <data>
+        <data name="MOD">
+            <![CDATA[{'comment': <module 'lexor-lang_html_parser_default_comment' from '/Users/jmlopez/github/lexor-lang-repos/html-parser-default/default/comment.pyc'>, 'doctype': <module 'lexor-lang_html_parser_default_doctype' from '/Users/jmlopez/github/lexor-lang-repos/html-parser-default/default/doctype.pyc'>, 'entity': <module 'lexor-lang_html_parser_default_entity' from '/Users/jmlopez/github/lexor-lang-repos/html-parser-default/default/entity.pyc'>, 'cdata': <module 'lexor-lang_html_parser_default_cdata' from '/Users/jmlopez/github/lexor-lang-repos/html-parser-default/default/cdata.pyc'>, 'element': <module 'lexor-lang_html_parser_default_element' from '/Users/jmlopez/github/lexor-lang-repos/html-parser-default/default/element.pyc'>, 'pi': <module 'lexor-lang_html_parser_default_pi' from '/Users/jmlopez/github/lexor-lang-repos/html-parser-default/default/pi.pyc'>}]]>
+        </data>
+    </data>
+    <imports>
+        <other fullname="lexor.command.lang.load_aux" type="function" name="load_aux"/>
+        <other fullname="lexor.init" type="function" name="init"/>
+    </imports>
+</module>

@@ -15,8 +15,11 @@ Contents:
 .. toctree::
     :maxdepth: 2
 
+    html.parser.default
     demo
     list
+
+
 
 Maaaaath!
 =========
