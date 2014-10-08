@@ -4,16 +4,20 @@ Simple style to write an xml file into the format needed for this
 project.
 
 """
-from lexor import init, load_aux
+import re
+import json
+from lexor import init
 from lexor.core.writer import NodeWriter
 import lexor.core.elements as core
 
+
+RE = re.compile("<module '(?P<name>.*?)' from '(?P<path>.*?)'>")
 
 INFO = init(
     version=(0, 0, 1, 'final', 0),
     lang='xml',
     type='writer',
-    description='Write rst file.',
+    description='Write rst file for the lexor-lang project.',
     author='Manuel Lopez',
     author_email='jmlopez.rod@gmail.com',
     license='BSD License',
@@ -50,6 +54,7 @@ class DefaultNW(NodeWriter):
         else:
             self.write('</%s>' % node.name)
 
+
 class DocumentNW(NodeWriter):
     """Finish document with a new line character. """
 
@@ -62,9 +67,20 @@ class CDataNW(NodeWriter):
 
     def data(self, node):
         data = node.data.split(']]>')
+        string = ''
         for index in xrange(len(data)-1):
-            self.write(data[index] + ']]]]><![CDATA[>')
-        self.write(data[-1])
+            string += data[index] + ']]]]><![CDATA[>'
+        string += data[-1]
+        if node.parent.parent.name != 'module':
+            if node.parent.parent.name == 'function':
+                indent = '    '*2
+            else:
+                indent = '    '
+            data = string.splitlines(True)
+            string = indent.join(data)
+            if node.index in [0, 1]:
+                string = indent + string
+        self.write(string)
 
 
 class TextNW(NodeWriter):
@@ -110,13 +126,208 @@ class InfoNW(NodeWriter):
         self.writer.endl(False)
 
 
+class MappingNW(NodeWriter):
+    """TODO"""
+
+    def start(self, node):
+        self.write("Mapping\n")
+        self.write("-------\n\n")
+
+    def child(self, node):
+        pass
+
+    def end(self, node):
+        self.writer.endl(False)
+
+
+class ImportsNW(NodeWriter):
+    """TODO"""
+
+    def start(self, node):
+        pass
+
+    def child(self, node):
+        pass
+
+    def end(self, node):
+        pass
+
+
+class ClassesNW(NodeWriter):
+    """TODO"""
+
+    def start(self, node):
+        pass
+
+    def end(self, node):
+        pass
+
+
+class FunctionsNW(NodeWriter):
+    """TODO"""
+
+    def start(self, node):
+        pass
+
+    def end(self, node):
+        pass
+
+
+class ModuleNW(NodeWriter):
+    """Supports cross referencing for modules. """
+
+    def start(self, node):
+        self.write('\n.. _%s:\n' % node["name"])
+
+    def end(self, node):
+        self.writer.endl(False)
+
+
+class ClassNW(NodeWriter):
+    """Declares the class. """
+
+    def start(self, node):
+        self.writer.crt_class = node['name']
+        functions = node('function')
+        init_function = None
+        for func in functions:
+            if func['name'] == '__init__':
+                init_function = func
+        if init_function:
+            argspecs = init_function("argspec")[0]
+            arg = argspecs("arg")
+            args = ''
+            index = 1
+            while index < len(arg) - 1:
+                args += arg[index]["name"] + ', '
+                index += 1
+            if index < len(arg):
+                args += arg[index]["name"]
+            if args != '':
+                args = '(' + args + ')'
+            self.write('.. class:: %s%s\n\n' % (node["name"], args))
+        else:
+            self.write('.. class:: %s\n\n' % node["name"])
+
+
+class BasesNW(NodeWriter):
+    """TODO"""
+
+    def start(self, node):
+        self.write('    Bases ')
+
+    def child(self, node):
+        classes = [
+            ':class:`%s`' % x['name'] for x in node.iter_child_elements()
+        ]
+        self.write(", ".join(classes))
+        self.write("\n\n")
+
+
+class MRONW(NodeWriter):
+    """TODO"""
+
+    def start(self, node):
+        pass
+
+    def child(self, node):
+        pass
+
+    def end(self, node):
+        pass
+
+
+class MethodBlockNW(NodeWriter):
+    """TODO"""
+
+    def start(self, node):
+        pass
+
+    def child(self, node):
+        if not node["from"].startswith('lexor-lang'):
+            return None
+        for func in node.iter_child_elements():
+            if func['name'][0] == '_':
+                continue
+            self.write('\n    .. method:: %s' % (func['name']))
+            argspecs = func("argspec")[0]
+            arg = argspecs("arg")
+            args = '('
+            index = 1
+            while index < len(arg) - 1:
+                args += arg[index]["name"] + ', '
+                index += 1
+            if index < len(arg):
+                args += arg[index]["name"]
+            args += ')'
+            self.write(args + "\n\n")
+            docs = func('doc')
+            if len(docs) == 0:
+                self.write("        ")
+                self.write("See base class for method explanation.\n")
+            else:
+                for node_item in docs[0].child:
+                    self.writer[node_item.name].data(node_item)
+                self.write('\n')
+
+
+class MemberBlockNW(NodeWriter):
+    """TODO"""
+
+    def start(self, node):
+        pass
+
+    def child(self, node):
+        pass
+
+
+class DataBlockNW(NodeWriter):
+    """TODO"""
+
+    def start(self, node):
+        self.write("\nData\n")
+        self.write("++++\n\n.. code::\n\n")
+
+class DataNW(NodeWriter):
+    """TODO"""
+
+    def start(self, node):
+        self.write('    %s = ' % node['name'])
+
+    def child(self, node):
+        data = ''
+        for item in node.child:
+            if item.name == '#cdata-section':
+                data += item.data
+        data = RE.sub(r'"\1"', data)
+        data = json.dumps(
+            eval(data), sort_keys=True, indent=4, separators=(',', ': ')
+        )
+        if node['name'] == 'MSG_EXPLANATION':
+            data = data.replace("\\n", "\n")
+            data = data.replace('"', '"""')
+        self.write(data.replace('\n', '\n    '))
+        self.write('\n\n')
+
+
 MAPPING = {
     '#document': DocumentNW,
     '#text': TextNW,
-    #'#entity': '#text',
-    'module': '#document',
+    # '#entity': '#text',
+    'module': ModuleNW,
     'doc': '#document',
     'info': InfoNW,
     '#cdata-section': CDataNW,
     '__default__': DefaultNW,
+    'mapping': MappingNW,
+    'imports': ImportsNW,
+    'classes': ClassesNW,
+    'functions': FunctionsNW,
+    'class': ClassNW,
+    'bases': BasesNW,
+    'mro': MRONW,
+    'method_block': MethodBlockNW,
+    'member_block': MemberBlockNW,
+    'data_block': DataBlockNW,
+    'data': DataNW,
 }

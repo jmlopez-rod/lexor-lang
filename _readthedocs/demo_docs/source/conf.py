@@ -32,7 +32,10 @@ extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.mathjax',
     'sphinx.ext.viewcode',
+    'sphinx.ext.intersphinx'
 ]
+
+intersphinx_mapping = {'python': ('http://localhost/lexor', None)}
 
 # Math
 mathjax_path = "http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"

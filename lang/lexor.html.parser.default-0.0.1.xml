@@ -1,6 +1,8 @@
 <module name="main">
     <doc>
-        <![CDATA[HTML: DEFAULT Parsing Style
+        <![CDATA[
+HTML: default
+=============
 
 This style attempts to follow all the HTML rules. It captures all the
 information in the file. This includes all the extra spaces, new
@@ -25,7 +27,7 @@ lines and tab characters the file might contain.
     <mapping>
         <entry key="__default__">
             <checker>
-                <![CDATA[<&]]>
+                <![CDATA['<&']]>
             </checker>
             <processor module="lexor-lang_html_parser_default_element" name="ElementNP"/>
             <processor module="lexor-lang_html_parser_default_cdata" name="CDataNP"/>
@@ -37,11 +39,11 @@ lines and tab characters the file might contain.
     </mapping>
     <classes/>
     <functions/>
-    <data>
+    <data_block>
         <data name="MOD">
-            <![CDATA[{'comment': <module 'lexor-lang_html_parser_default_comment' from '/Users/jmlopez/github/lexor-lang-repos/html-parser-default/default/comment.pyc'>, 'doctype': <module 'lexor-lang_html_parser_default_doctype' from '/Users/jmlopez/github/lexor-lang-repos/html-parser-default/default/doctype.pyc'>, 'entity': <module 'lexor-lang_html_parser_default_entity' from '/Users/jmlopez/github/lexor-lang-repos/html-parser-default/default/entity.pyc'>, 'cdata': <module 'lexor-lang_html_parser_default_cdata' from '/Users/jmlopez/github/lexor-lang-repos/html-parser-default/default/cdata.pyc'>, 'element': <module 'lexor-lang_html_parser_default_element' from '/Users/jmlopez/github/lexor-lang-repos/html-parser-default/default/element.pyc'>, 'pi': <module 'lexor-lang_html_parser_default_pi' from '/Users/jmlopez/github/lexor-lang-repos/html-parser-default/default/pi.pyc'>}]]>
+            <![CDATA[{'comment': <module 'lexor-lang_html_parser_default_comment' from '/Users/jmlopez/github/lexor-lang-repos/html-parser-default/default/comment.py'>, 'doctype': <module 'lexor-lang_html_parser_default_doctype' from '/Users/jmlopez/github/lexor-lang-repos/html-parser-default/default/doctype.pyc'>, 'entity': <module 'lexor-lang_html_parser_default_entity' from '/Users/jmlopez/github/lexor-lang-repos/html-parser-default/default/entity.pyc'>, 'cdata': <module 'lexor-lang_html_parser_default_cdata' from '/Users/jmlopez/github/lexor-lang-repos/html-parser-default/default/cdata.py'>, 'element': <module 'lexor-lang_html_parser_default_element' from '/Users/jmlopez/github/lexor-lang-repos/html-parser-default/default/element.py'>, 'pi': <module 'lexor-lang_html_parser_default_pi' from '/Users/jmlopez/github/lexor-lang-repos/html-parser-default/default/pi.py'>}]]>
         </data>
-    </data>
+    </data_block>
     <imports>
         <other fullname="lexor.command.lang.load_aux" type="function" name="load_aux"/>
         <other fullname="lexor.init" type="function" name="init"/>
@@ -49,23 +51,25 @@ lines and tab characters the file might contain.
 </module>
 <module name="lexor-lang_html_parser_default_cdata">
     <doc>
-        <![CDATA[HTML: CDATA NodeParser
+        <![CDATA[
+CData
+-----
 
-`CData` nodes are enclosed within `<![CDATA[` and `]]]]><![CDATA[>`. These type
-of nodes are useful because no parsing takes place inside the
+``CData`` nodes are enclosed within ``<![CDATA[`` and ``]]]]><![CDATA[>``. These
+type of nodes are useful because no parsing takes place inside the
 content. The only restriction involved with these nodes is that the
-character sequence `]]]]><![CDATA[>` must not appear in the content.
+character sequence ``]]]]><![CDATA[>`` must not appear in the content.
 
-In case there is a need to write `]]]]><![CDATA[>` inside the character data then
-you have to split the content into two `CData` nodes:
+In case there is a need to write ``]]]]><![CDATA[>`` inside the character data
+then you have to split the content into two ``CData`` nodes:
 
-The correct way to write the following
+The correct way to write the following ::
 
-    <![CDATA[Cannot have `]]]]><![CDATA[>` inside.]]]]><![CDATA[>
+    <![CDATA[Cannot have ``]]]]><![CDATA[>`` inside.]]]]><![CDATA[>
 
-is
+is ::
 
-    <![CDATA[Cannot have `]]]]]]><![CDATA[><![CDATA[>` inside.]]]]><![CDATA[>
+    <![CDATA[Cannot have ``]]]]]]><![CDATA[><![CDATA[>`` inside.]]]]><![CDATA[>
 
 ]]>
     </doc>
@@ -80,8 +84,8 @@ is
                 <class name="__builtin__.object"/>
             </mro>
             <doc>
-                <![CDATA[Retrives the data enclosed within `<![CDATA[` and `]]]]><![CDATA[>` and
-returns a `CData` node. ]]>
+                <![CDATA[Retrives the data enclosed within ``<![CDATA[`` and ``]]]]><![CDATA[>``
+and returns a ``CData`` node. ]]>
             </doc>
             <method_block from="lexor-lang_html_parser_default_cdata.CDataNP">
                 <function name="make_node">
@@ -155,12 +159,7 @@ containing the line and column number. Some error codes may
 provide arguments, this can be passed to `arg`. In case the
 error occurred somewhere not in the current document, perhaps
 in a string, then you may provide a new `uri` to denote the
-location.
-
-.. todo:: Provide link to parse style creation.
-
-See :ref:`` for more information on how to properly use this
-method. ]]>
+location.]]>
                     </doc>
                 </function>
             </method_block>
@@ -187,14 +186,14 @@ parameter.]]>
         </class>
     </classes>
     <functions/>
-    <data>
+    <data_block>
         <data name="MSG">
-            <![CDATA[{'E100': '`]]]]><![CDATA[>` not found'}]]>
+            <![CDATA[{'E100': '``]]]]><![CDATA[>`` not found'}]]>
         </data>
         <data name="MSG_EXPLANATION">
-            <![CDATA[['\n    - The terminating character sequence for the `CData` node was not\n      found.\n\n    Okay: <![CDATA[We can write a < b and M&Ms.]]]]><![CDATA[>\n\n    E100: <![CDATA[We can write a < b and M&Ms.\n']]]>
+            <![CDATA[['\n    - The terminating character sequence for the ``CData`` node was\n      not found.\n\n    Okay: <![CDATA[We can write a < b and M&Ms.]]]]><![CDATA[>\n\n    E100: <![CDATA[We can write a < b and M&Ms.\n']]]>
         </data>
-    </data>
+    </data_block>
     <imports>
         <other fullname="lexor.core.parser.NodeParser" type="type" name="NodeParser"/>
         <other fullname="lexor.core.elements.CData" type="type" name="CData"/>
@@ -202,16 +201,18 @@ parameter.]]>
 </module>
 <module name="lexor-lang_html_parser_default_pi">
     <doc>
-        <![CDATA[HTML: PI NodeParser
+        <![CDATA[
+Processing Instruction
+----------------------
 
-An HTML processing instruction is enclosed within `<?` and `?>`. It
-contains a target and optionally some content. The content is the
-node data and it cannot contain the sequence `?>`. A valid processing
-instruction is of the form
+An HTML processing instruction is enclosed within ``<?`` and ``?>``.
+It contains a target and optionally some content. The content is the
+node data and it cannot contain the sequence ``?>``. A valid
+processing instruction is of the form ::
 
     <?PITarget*PIContent?>
 
-where `*` is a space character (this includes tabs and new lines).
+where ``*`` is a space character (this includes tabs and new lines).
 
 ]]>
     </doc>
@@ -226,9 +227,9 @@ where `*` is a space character (this includes tabs and new lines).
                 <class name="__builtin__.object"/>
             </mro>
             <doc>
-                <![CDATA[Parses content enclosed within `<?PITarget` and `?>`. Note
-that the target of the `ProcessingInstruction` object that it
-returns has `?` preappended to it. ]]>
+                <![CDATA[Parses content enclosed within ``<?PITarget`` and ``?>``. Note
+that the target of the ``ProcessingInstruction`` object that it
+returns has ``?`` preappended to it. ]]>
             </doc>
             <method_block from="lexor-lang_html_parser_default_pi.ProcessingInstructionNP">
                 <function name="make_node">
@@ -302,12 +303,7 @@ containing the line and column number. Some error codes may
 provide arguments, this can be passed to `arg`. In case the
 error occurred somewhere not in the current document, perhaps
 in a string, then you may provide a new `uri` to denote the
-location.
-
-.. todo:: Provide link to parse style creation.
-
-See :ref:`` for more information on how to properly use this
-method. ]]>
+location.]]>
                     </doc>
                 </function>
             </method_block>
@@ -334,9 +330,9 @@ parameter.]]>
         </class>
     </classes>
     <functions/>
-    <data>
+    <data_block>
         <data name="RE">
-            <![CDATA[<_sre.SRE_Pattern object at 0x10a7dbf48>]]>
+            <![CDATA['.*?[ \t\n\r\x0c\x0b]']]>
         </data>
         <data name="MSG">
             <![CDATA[{'E100': 'ignoring processing instruction', 'E101': '`<{0}` was started but `?>` was not found'}]]>
@@ -344,7 +340,7 @@ parameter.]]>
         <data name="MSG_EXPLANATION">
             <![CDATA[["\n    - A processing instruction must have a target and must be\n      enclosed within `<?` and `?>`.\n\n    - If there is no space following the target of the processing\n      instruction, that is, if the file ends abrutly, then the\n      processing instruction will be ignored.\n\n    Okay: <?php echo '<p>Hello World</p>'; ?>\n\n    E100: <?php\n    E101: <?php echo '<p>Hello World</p>';\n"]]]>
         </data>
-    </data>
+    </data_block>
     <imports>
         <module fullname="re" name="re"/>
         <other fullname="lexor.core.elements.ProcessingInstruction" type="type" name="ProcessingInstruction"/>
@@ -452,12 +448,7 @@ containing the line and column number. Some error codes may
 provide arguments, this can be passed to `arg`. In case the
 error occurred somewhere not in the current document, perhaps
 in a string, then you may provide a new `uri` to denote the
-location.
-
-.. todo:: Provide link to parse style creation.
-
-See :ref:`` for more information on how to properly use this
-method. ]]>
+location.]]>
                     </doc>
                 </function>
             </method_block>
@@ -484,14 +475,14 @@ parameter.]]>
         </class>
     </classes>
     <functions/>
-    <data>
+    <data_block>
         <data name="MSG">
             <![CDATA[{'E100': '`>` not found'}]]>
         </data>
         <data name="MSG_EXPLANATION">
             <![CDATA[['\n    - A `doctype` element starts with `<!doctype` and it is\n      terminated by `>`.\n\n    Okay: <!doctype html>\n    Okay: <!DOCTYPE html>\n\n    E100: <!doctype html\n']]]>
         </data>
-    </data>
+    </data_block>
     <imports>
         <other fullname="lexor.core.parser.NodeParser" type="type" name="NodeParser"/>
         <other fullname="lexor.core.elements.DocumentType" type="type" name="DocumentType"/>
@@ -499,13 +490,16 @@ parameter.]]>
 </module>
 <module name="lexor-lang_html_parser_default_comment">
     <doc>
-        <![CDATA[HTML: COMMENT NodeParser
+        <![CDATA[
+Comment
+-------
 
-An HTML comment is enclosed within `<!--` and `-->`. The string `--`
-(double-hyphen) MUST NOT occur within comments. If the string starts
-with `<!` then it is still a comment but a warning will be issued.
+An HTML comment is enclosed within ``<!--`` and ``-->``. The string
+``--`` (double-hyphen) **MUST NOT** occur within comments. If the
+string starts with ``<!`` then it is still a comment but a warning
+will be issued.
 
-See: <http://www.w3.org/TR/REC-xml/#sec-comments>
+See: http://www.w3.org/TR/REC-xml/#sec-comments
 
 ]]>
     </doc>
@@ -520,7 +514,8 @@ See: <http://www.w3.org/TR/REC-xml/#sec-comments>
                 <class name="__builtin__.object"/>
             </mro>
             <doc>
-                <![CDATA[Creates `Comment` nodes from comments written in HTML. ]]>
+                <![CDATA[Creates :class:`~lexor.core.elements.Comment` nodes from
+comments written in HTML. ]]>
             </doc>
             <method_block from="lexor-lang_html_parser_default_comment.CommentNP">
                 <function name="_handle_bogus">
@@ -606,12 +601,7 @@ containing the line and column number. Some error codes may
 provide arguments, this can be passed to `arg`. In case the
 error occurred somewhere not in the current document, perhaps
 in a string, then you may provide a new `uri` to denote the
-location.
-
-.. todo:: Provide link to parse style creation.
-
-See :ref:`` for more information on how to properly use this
-method. ]]>
+location.]]>
                     </doc>
                 </function>
             </method_block>
@@ -638,14 +628,14 @@ parameter.]]>
         </class>
     </classes>
     <functions/>
-    <data>
+    <data_block>
         <data name="MSG">
             <![CDATA[{'E201': '`>` not found', 'E200': '`-->` not found', 'E100': 'bogus comment started', 'E301': '`--` in comment opened at {0}:{1:2}', 'E300': '`>` found'}]]>
         </data>
         <data name="MSG_EXPLANATION">
             <![CDATA[['\n    - Bogus comments are detected when the parser reads `<!` and\n      the next sequence of characters is not `--`.\n\n    - Always start comments with `<!--`.\n\n    Okay: <!--simple comment-->\n\n    E100: <!simple comment-->\n    E100: <!-simple comment-->\n    E100: <!- -simple comment-->\n', '\n    - Comments end with the character sequence `-->`.\n\n    - The parser will assume that the termination of the comment is\n      at the end of the file.\n\n    Okay: <!--x -> y-->\n\n    E200: <!--x -> y\n    E200: <!--x -> y-- >\n    E200: <!--x -> y ->\n', '\n    - When a bogus comment is started, the parser is forced to look\n      for the character `>` as its termination sequence instead of\n      `-->`.\n\n    - The original message informs you if `>` was found or not.\n\n    Okay: <!-- comment -->\n    E300: <! comment >\n    E201: <! comment\n', '\n    - The character sequence `--` must not appear within a comment.\n\n    - This sequence will be interpreted as `- `.\n\n    Okay: <!-- 1 - 2 - 3 - 4 - 5 -->\n    E301: <!-- 1 -- 2 -- 3 -- 4 -- 5 -->\n']]]>
         </data>
-    </data>
+    </data_block>
     <imports>
         <other fullname="lexor.core.elements.Comment" type="type" name="Comment"/>
         <other fullname="lexor.core.parser.NodeParser" type="type" name="NodeParser"/>
@@ -773,12 +763,7 @@ containing the line and column number. Some error codes may
 provide arguments, this can be passed to `arg`. In case the
 error occurred somewhere not in the current document, perhaps
 in a string, then you may provide a new `uri` to denote the
-location.
-
-.. todo:: Provide link to parse style creation.
-
-See :ref:`` for more information on how to properly use this
-method. ]]>
+location.]]>
                     </doc>
                 </function>
             </method_block>
@@ -805,9 +790,9 @@ parameter.]]>
         </class>
     </classes>
     <functions/>
-    <data>
+    <data_block>
         <data name="RE">
-            <![CDATA[<_sre.SRE_Pattern object at 0x10a85b030>]]>
+            <![CDATA['.*?[ \t\n\r\x0c\x0b;]']]>
         </data>
         <data name="MSG">
             <![CDATA[{'E100': 'stray `{0}` found', 'E101': 'ignoring stray end tag `{0}`'}]]>
@@ -815,7 +800,7 @@ parameter.]]>
         <data name="MSG_EXPLANATION">
             <![CDATA[['\n    - HTML has `<` and `&` as reserved characters. To be able to\n      display `<` you must write the entity `&lt;` or `&#60;`. To\n      write `&` you can use the entity `&amp;`\n\n    Okay: a &lt; b\n    Okay: I like M&amp;Ms\n\n    E100: a < b\n    E100: I like M&Ms\n', '\n    - Stray end tags are usually an indication of an error. The short\n      message tells you the location of the stray end tag but there\n      is nothing that can be said about the possible error.\n\n    Okay: <apples><bananas></bananas></apples>\n    E101: <apples></bananas></apples>\n']]]>
         </data>
-    </data>
+    </data_block>
     <imports>
         <module fullname="re" name="re"/>
         <other fullname="lexor.core.elements.Text" type="type" name="Text"/>
@@ -825,9 +810,11 @@ parameter.]]>
 </module>
 <module name="lexor-lang_html_parser_default_element">
     <doc>
-        <![CDATA[HTML: ELEMENT NodeParser
+        <![CDATA[
+Element
+-------
 
-Handles all `Elements` in the form
+Handles all ``Elements`` in the form ::
 
     <tagname att1="val1" att2="val2">
         ...
@@ -1009,12 +996,7 @@ containing the line and column number. Some error codes may
 provide arguments, this can be passed to `arg`. In case the
 error occurred somewhere not in the current document, perhaps
 in a string, then you may provide a new `uri` to denote the
-location.
-
-.. todo:: Provide link to parse style creation.
-
-See :ref:`` for more information on how to properly use this
-method. ]]>
+location.]]>
                     </doc>
                 </function>
             </method_block>
@@ -1041,7 +1023,7 @@ parameter.]]>
         </class>
     </classes>
     <functions/>
-    <data>
+    <data_block>
         <data name="RAWTEXT_ELEMENT">
             <![CDATA[('script', 'style', 'textarea', 'title')]]>
         </data>
@@ -1049,10 +1031,10 @@ parameter.]]>
             <![CDATA[{'a': ['a'], 'p': ['address', 'article', 'aside', 'blockquote', 'dir', 'div', 'dl', 'fieldset', 'footer', 'form', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'header', 'hgroup', 'hr', 'main', 'menu', 'nav', 'ol', 'p', 'pre', 'section', 'table', 'ul']}]]>
         </data>
         <data name="RE_NOSPACE">
-            <![CDATA[<_sre.SRE_Pattern object at 0x10a776cf0>]]>
+            <![CDATA['\\s*']]>
         </data>
         <data name="RE_NEXT">
-            <![CDATA[<_sre.SRE_Pattern object at 0x109f18e90>]]>
+            <![CDATA['.*?[ \\t\\n\\r\\f\\v/>=]']]>
         </data>
         <data name="MSG_EXPLANATION">
             <![CDATA[['\n    - The opening tag of an element cannot contain `<`. This means\n      that attributes cannot contain `<` in them.\n\n    Okay: <apple att1="val1"></apple>\n\n    E100: <apple att1="a < b"></apple>\n', '\n    - `RawText` elements are terminated when the appropiate closing\n      tag is found. Make sure to provide its proper closing tag.\n\n    Okay: <title>My awesome website</title>\n    Okay: <script>a < b && b > c</script>\n\n    E110: <title>My sheetie website</title >\n    E110: <title>My sheetie website< / title >\n    E110: <title>My sheetie website\n    E110: <script>a < b && b > c\n', '\n    - A `Void` Element\'s opening tag must end with `/>`. Anything in\n      between the characters `/` and `>` will be ignored.\n\n    - Non-void elements whose opening tag start with `/>` will be\n      also be interpreted correctly a message will be issued.\n\n    Okay: <img href="/path/to/image.png"/>\n    Okay: <p>starting a new paragraph</p>\n\n    E120: <img href="/path/to/image.png"/  >\n    E121: <p />starting a new paragraph</p>\n', '\n    - Attributes need to be separated by one space.\n\n    - Do not repeat attributes since the values will only get\n      overwritten.\n\n    Okay: <tag att1="val1" att2="val2">content</tag>\n    Okay: <tag att1=\'1\' att2=\'2\'></tag>\n\n    E130: <tag att1="val1"att2="val2">content</tag>\n    E160: <tag att1=\'1\' att1=\'2\'></tag>\n', '\n    A few attributes rules:\n\n    - There is a risk of joining attributes together when using\n      unquoted attribute values. This may result in having a quote or\n      equal sign inside the unquoted attribute value. [E140]\n\n    - If your attribute contains `/` then the attribute should be\n      quoted. [E141]\n\n    - Quoted attributes need to be finished by its starting quotation\n      character. [E150]\n\n    Okay: <tag att1=val1 att2="val2">content</tag>\n    E140: <tag att1=val1att2="val2">content</tag>\n\n    Okay: <img href="path/to/image.png" />\n    E141: <img href=path/to/image.png />\n\n    Okay: <tag att1="num"></tag>\n    Okay: <tag att1=\'num\'></tag>\n\n    E150: <tag att1="num></tag>\n    E150: <tag att1=\'num></tag>\n']]]>
@@ -1067,9 +1049,9 @@ parameter.]]>
             <![CDATA[{'option': ['optgroup', 'option'], 'dd': ['dt', 'dd'], 'optgroup': ['optgroup'], 'dt': ['dt', 'dd'], 'rt': ['rt', 'rp'], 'rp': ['rt', 'rp'], 'tr': ['tr'], 'tbody': ['tbody', 'tfoot'], 'li': ['li'], 'tfoot': ['tbody'], 'th': ['td', 'th'], 'td': ['td', 'th'], 'thead': ['tbody', 'tfoot']}]]>
         </data>
         <data name="RE">
-            <![CDATA[<_sre.SRE_Pattern object at 0x10a705dd8>]]>
+            <![CDATA['.*?[ \\t\\n\\r\\f\\v/>]']]>
         </data>
-    </data>
+    </data_block>
     <imports>
         <module fullname="re" name="re"/>
         <other fullname="lexor.core.elements.RawText" type="type" name="RawText"/>
