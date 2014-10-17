@@ -1,0 +1,1 @@
+Search.setIndex({envversion:42,terms:{variou:1,avail:1,collect:1,file:1,document:1,languag:1},objtypes:{},objnames:{},filenames:["index","includeme"],titles:["Lexor Language Styles","lexor-lang"],objects:{},titleterms:{lang:1,convert:0,parser:0,writer:0,style:0,lexor:[0,1],languag:0}})
