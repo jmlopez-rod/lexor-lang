@@ -4595,6 +4595,12 @@ nav.stickynav {
   padding-right: 0;
   vertical-align: top;
 }
+.rst-content table.docutils {
+  width: 100%;
+}
+.rst-content table.docutils td {
+  vertical-align: top;
+}
 .rst-content table.field-list {
   border: none;
 }
@@ -4712,6 +4718,16 @@ nav.stickynav {
 .rst-content p.rubric {
   margin-bottom: 12px;
   font-weight: bold;
+}
+.rst-content .mapping dt {
+  margin-bottom: 0.5em;
+}
+.rst-content .mapping li {
+  font-weight: bold;
+}
+.rst-content .mapping ol .literal {
+  background: none;
+  border: none;
 }
 
 @media screen and (max-width: 480px) {

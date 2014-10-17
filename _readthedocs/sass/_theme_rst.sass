@@ -163,10 +163,13 @@
       padding-right: 0
       vertical-align: top
   table.docutils
+    width: 100%
     @extend .wy-table
     @extend .wy-table-bordered-all
     &:not(.field-list)
       @extend .wy-table-striped
+    td
+      vertical-align: top
   // This table is what gets spit out for auto-generated API stuff. I style it smaller bits of padding.
   table.field-list
     @extend .wy-table
@@ -276,6 +279,16 @@
   p.rubric
     margin-bottom: 12px
     font-weight: bold
+
+  .mapping
+    dt
+      margin-bottom: .5em
+    li
+      font-weight: bold
+    ol
+      .literal
+        background: none
+        border: none
 
 // Mobile specific
 +media($mobile)

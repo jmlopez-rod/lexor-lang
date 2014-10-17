@@ -14,6 +14,13 @@ $( document ).ready(function() {
     });  
     // Make tables responsive
     $("table.docutils:not(.field-list)").wrap("<div class='wy-table-responsive'></div>");
+    // toggle custom sections
+    $(".toggle > *").hide();
+    $(".toggle .header").show();
+    $(".toggle .header").click(function() {
+        $(this).parent().children().not(".header").toggle(400);
+        $(this).parent().children(".header").toggleClass("open");
+    })
 });
 
 window.SphinxRtdTheme = (function (jquery) {

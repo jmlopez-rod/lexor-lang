@@ -12,6 +12,10 @@ import lexor.core.elements as core
 
 
 RE = re.compile("<module '(?P<name>.*?)' from '(?P<path>.*?)'>")
+RE2 = re.compile("<(?P<name>.*?) object at (?P<id>.*?)>")
+RE3 = re.compile("<class '(?P<name>.*?)'>")
+RE4 = re.compile("<(?P<name>.*?) instance at (?P<id>.*?)>")
+
 
 INFO = init(
     version=(0, 0, 1, 'final', 0),
@@ -300,6 +304,9 @@ class DataNW(NodeWriter):
             if item.name == '#cdata-section':
                 data += item.data
         data = RE.sub(r'"\1"', data)
+        data = RE2.sub(r'"\1"', data)
+        data = RE3.sub(r'"\1"', data)
+        data = RE4.sub(r'"\1"', data)
         data = json.dumps(
             eval(data), sort_keys=True, indent=4, separators=(',', ': ')
         )

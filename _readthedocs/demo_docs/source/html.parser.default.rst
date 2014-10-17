@@ -27,6 +27,26 @@ Package Details
 Mapping
 -------
 
+.. container:: mapping
+
+    .. list-table::
+       :widths: 25 75
+       :header-rows: 1
+
+       * - Node Name
+         - Node Parsers
+       * - **__default__**
+         - ``<&\\\\`\'\"*_{}[\\]()#+-.!%$:\n``
+            #. :class:`CDataNP`
+            #. :class:`ProcessingInstructionNP`
+       * - **#document**
+         -  #. :class:`CDataNP`
+            #. :class:`CDataNP`
+            #. :class:`ProcessingInstructionNP`
+       * - **p**
+         - ``'<&\\\\`\'\"*_{}[\\]()#+-.!%$:\n'``
+            #. :class:`CDataNP`
+            #. :class:`ProcessingInstructionNP`
 
 Data
 ++++
