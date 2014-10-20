@@ -24,8 +24,8 @@ Package Details
     :keywords: html, default, parser
     :description lang=en: Parse HTML files using all the valid rules.
 
-Mapping
--------
+Parsing Map
+-----------
 
 .. container:: mapping
 
@@ -47,20 +47,6 @@ Mapping
          - ``'<&\\\\`\'\"*_{}[\\]()#+-.!%$:\n'``
             #. :class:`CDataNP`
             #. :class:`ProcessingInstructionNP`
-
-Data
-++++
-
-.. code::
-
-    MOD = {
-        "cdata": "lexor-lang_html_parser_default_cdata",
-        "comment": "lexor-lang_html_parser_default_comment",
-        "doctype": "lexor-lang_html_parser_default_doctype",
-        "element": "lexor-lang_html_parser_default_element",
-        "entity": "lexor-lang_html_parser_default_entity",
-        "pi": "lexor-lang_html_parser_default_pi"
-    }
 
 
 .. _lexor-lang_html_parser_default_cdata:
@@ -95,10 +81,46 @@ is ::
 
         See base class for method explanation.
 
-Data
-++++
+Messages
+++++++++
 
-.. code::
+.. container:: messages toggle
+
+    .. container:: header other
+
+        E101: Don't do this and that
+
+    .. container:: explanation
+
+       - first line paragraph explanation some stuff.
+         here too.
+       - Second paragraph.
+
+.. container:: messages toggle
+
+    .. container:: header other
+
+        E101: Don't do this and that
+
+    .. container:: explanation
+
+       - first line paragraph explanation some stuff.
+         here too.
+       - Second paragraph.
+
+.. container:: messages toggle
+
+    .. container:: header other
+
+        E101: Don't do this and that
+
+    .. container:: explanation
+
+       - first line paragraph explanation some stuff.
+         here too.
+       - Second paragraph.
+
+
 
     MSG = {
         "E100": "``]]>`` not found"
