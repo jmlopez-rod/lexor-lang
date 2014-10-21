@@ -93,7 +93,7 @@ Messages
     .. container:: explanation
 
        - first line paragraph explanation some stuff.
-         here too.
+         here too. ``code`` **strong**
        - Second paragraph.
 
 .. container:: messages toggle
